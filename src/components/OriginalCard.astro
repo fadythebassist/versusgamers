@@ -1,0 +1,21 @@
+---
+import type { Original } from '../data/originals';
+import { ORIGINALS } from '../data/originals';
+import { path, type Lang } from '../i18n/ui';
+import { existsSync } from 'node:fs';
+interface Props { original: Original; lang: Lang }
+const { original: o, lang } = Astro.props;
+const i = ORIGINALS.findIndex((x) => x.slug === o.slug) + 1;
+const hasCover = o.cover && existsSync(`public${o.cover}`);
+---
+<a class="card orig-card" href={path.original(lang, o.slug)}>
+  <div class="orig-thumb" style={`background:var(--orig${i}-bg)`}>
+    {hasCover
+      ? <img src={o.cover} alt="" width="640" height="400" loading="lazy" decoding="async" />
+      : <span class="orig-glyph" style={`color:var(--orig${i}-fg)`} aria-hidden="true">{o.glyph}</span>}
+  </div>
+  <div class="card-body">
+    <div class="card-title">{o.title}</div>
+    <div class="card-meta">{o.text[lang].tag}</div>
+  </div>
+</a>

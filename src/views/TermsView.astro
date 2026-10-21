@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import { path, other, type Lang } from '../i18n/ui';
+import { SITE } from '../config/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const updated = { en: 'October 20, 2026', fr: '20 octobre 2026' }[lang];
+const email = SITE.contactEmail;
+---
+<Base lang={lang} title={lang === 'fr' ? "Conditions d'utilisation — Versus Gamers" : 'Terms of use — Versus Gamers'} description={lang === 'fr' ? "Les conditions d'utilisation du site Versus Gamers." : 'The terms for using the Versus Gamers website.'} altPath={path.page(other(lang), 'terms')}>
+  <div class="container">
+    <header class="page-head">
+      <h1 class="page-title">{lang === 'fr' ? "Conditions d'utilisation" : 'Terms of use'}</h1>
+      <p class="page-sub">{lang === 'fr' ? `Dernière mise à jour : ${updated}` : `Last updated: ${updated}`}</p>
+    </header>
+    {lang === 'en' ? (
+      <article class="legal">
+        <p>By using versusgamers.com (the “site”), you agree to these terms. If you don’t agree, please don’t use the site.</p>
+        <h2>The service</h2>
+        <p>Versus Gamers is a free website where you can play browser games. Some games are made by Versus Gamers (our “originals”). Most are provided by our partner Playgama and its developers, load from playgama.com, and are also subject to <a href="https://playgama.com/termsofuse" rel="noopener" target="_blank">Playgama’s terms</a>. We can add, change or remove games at any time.</p>
+        <h2>Who can use it</h2>
+        <p>The site is designed for teens and adults. If you are under the age of majority where you live, use it with the permission of a parent or guardian.</p>
+        <h2>Acceptable use</h2>
+        <p>Don’t use the site to break the law, interfere with the site or the games (for example with bots, scripts or attacks), generate fake traffic or ad clicks, copy the site’s content in bulk, or bypass any technical protection.</p>
+        <h2>Ownership</h2>
+        <p>The Versus Gamers name, logo, site design, text and our original games belong to Versus Gamers. Games from Playgama and other providers, and their names and images, belong to their owners. You may play the games for your personal enjoyment; you may not copy, resell or redistribute them.</p>
+        <h2>Ads and purchases</h2>
+        <p>Games from Playgama may show ads and may offer optional in-game purchases handled by their providers. Any purchase is between you and that provider, under their terms. Versus Gamers does not sell anything directly.</p>
+        <h2>No warranty</h2>
+        <p>The site and the games are provided “as is”. We do our best to keep them working and appropriate, but we don’t guarantee that every game will be available, free of errors or suited to your device. To the extent permitted by law, Versus Gamers is not responsible for losses resulting from your use of the site or of third-party games. Nothing in these terms limits rights you have under Quebec’s <em>Consumer Protection Act</em> or other laws that cannot be waived.</p>
+        <h2>Links</h2>
+        <p>The site links to other websites we don’t control. Their content and practices are their own responsibility.</p>
+        <h2>Privacy</h2>
+        <p>See our <a href={path.page(lang, 'privacy')}>privacy policy</a>.</p>
+        <h2>Changes and governing law</h2>
+        <p>We may update these terms; the date at the top shows the latest version. These terms are governed by the laws of Quebec and of Canada that apply there.</p>
+        <h2>Contact</h2>
+        <p><a href={`mailto:${email}`}>{email}</a></p>
+      </article>
+    ) : (
+      <article class="legal">
+        <p>En utilisant versusgamers.com (le « site »), tu acceptes ces conditions. Si tu ne les acceptes pas, n’utilise pas le site.</p>
+        <h2>Le service</h2>
+        <p>Versus Gamers est un site gratuit où tu peux jouer à des jeux dans ton navigateur. Certains jeux sont créés par Versus Gamers (nos « originaux »). La plupart sont fournis par notre partenaire Playgama et ses développeurs, se chargent à partir de playgama.com et sont aussi soumis aux <a href="https://playgama.com/fr/conditions-dutilisation" rel="noopener" target="_blank">conditions de Playgama</a>. Nous pouvons ajouter, modifier ou retirer des jeux en tout temps.</p>
+        <h2>Qui peut l’utiliser</h2>
+        <p>Le site s’adresse aux adolescents et aux adultes. Si tu n’as pas l’âge de la majorité là où tu habites, utilise-le avec la permission d’un parent ou d’un tuteur.</p>
+        <h2>Utilisation acceptable</h2>
+        <p>N’utilise pas le site pour enfreindre la loi, nuire au site ou aux jeux (par exemple avec des robots, des scripts ou des attaques), générer du faux trafic ou de faux clics sur des publicités, copier le contenu du site en masse ou contourner une protection technique.</p>
+        <h2>Propriété</h2>
+        <p>Le nom et le logo Versus Gamers, le design du site, les textes et nos jeux originaux appartiennent à Versus Gamers. Les jeux de Playgama et d’autres fournisseurs, ainsi que leurs noms et images, appartiennent à leurs propriétaires. Tu peux jouer aux jeux pour ton plaisir personnel; tu ne peux pas les copier, les revendre ni les redistribuer.</p>
+        <h2>Publicités et achats</h2>
+        <p>Les jeux de Playgama peuvent afficher des publicités et offrir des achats facultatifs gérés par leurs fournisseurs. Tout achat se fait entre toi et ce fournisseur, selon ses conditions. Versus Gamers ne vend rien directement.</p>
+        <h2>Aucune garantie</h2>
+        <p>Le site et les jeux sont fournis « tels quels ». Nous faisons de notre mieux pour qu’ils fonctionnent et restent appropriés, mais nous ne garantissons pas que chaque jeu sera disponible, sans erreur ou adapté à ton appareil. Dans la mesure permise par la loi, Versus Gamers n’est pas responsable des pertes découlant de ton utilisation du site ou de jeux de tiers. Rien dans ces conditions ne limite les droits que te donnent la <em>Loi sur la protection du consommateur</em> du Québec ou d’autres lois auxquelles on ne peut renoncer.</p>
+        <h2>Liens</h2>
+        <p>Le site contient des liens vers d’autres sites que nous ne contrôlons pas. Leur contenu et leurs pratiques relèvent de leur responsabilité.</p>
+        <h2>Confidentialité</h2>
+        <p>Consulte notre <a href={path.page(lang, 'privacy')}>politique de confidentialité</a>.</p>
+        <h2>Modifications et droit applicable</h2>
+        <p>Nous pouvons mettre ces conditions à jour; la date en haut indique la version en vigueur. Ces conditions sont régies par les lois du Québec et les lois du Canada qui s’y appliquent.</p>
+        <h2>Contact</h2>
+        <p><a href={`mailto:${email}`}>{email}</a></p>
+      </article>
+    )}
+  </div>
+</Base>

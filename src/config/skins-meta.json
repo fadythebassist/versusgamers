@@ -1,0 +1,106 @@
+[
+  {
+    "id": "arena",
+    "name": {
+      "en": "Arena",
+      "fr": "Arena"
+    },
+    "bg": "#0A0A12",
+    "surface": "#12121D",
+    "accent": "#FF2E88",
+    "accent2": "#22E4FF",
+    "text": "#F4F4FA",
+    "scheme": "dark"
+  },
+  {
+    "id": "synthwave",
+    "name": {
+      "en": "Synthwave",
+      "fr": "Synthwave"
+    },
+    "bg": "#140A26",
+    "surface": "#1F1238",
+    "accent": "#FF5CDB",
+    "accent2": "#6CF0FF",
+    "text": "#FBF6FF",
+    "scheme": "dark"
+  },
+  {
+    "id": "neonpro",
+    "name": {
+      "en": "Neon Pro",
+      "fr": "Néon Pro"
+    },
+    "bg": "#0B0C0F",
+    "surface": "#15171C",
+    "accent": "#C8FF3D",
+    "accent2": "#C8FF3D",
+    "text": "#F2F4F7",
+    "scheme": "dark"
+  },
+  {
+    "id": "overdrive",
+    "name": {
+      "en": "Overdrive",
+      "fr": "Overdrive"
+    },
+    "bg": "#0D0D0D",
+    "surface": "#171717",
+    "accent": "#FCEE0A",
+    "accent2": "#3DF2F2",
+    "text": "#F5F5F0",
+    "scheme": "dark"
+  },
+  {
+    "id": "terminal",
+    "name": {
+      "en": "Terminal",
+      "fr": "Terminal"
+    },
+    "bg": "#050805",
+    "surface": "#0A120A",
+    "accent": "#39FF6A",
+    "accent2": "#39FF6A",
+    "text": "#D7FFD7",
+    "scheme": "dark"
+  },
+  {
+    "id": "champion",
+    "name": {
+      "en": "Champion",
+      "fr": "Champion"
+    },
+    "bg": "#0B0A08",
+    "surface": "#15130F",
+    "accent": "#E8B931",
+    "accent2": "#E8B931",
+    "text": "#F6F1E6",
+    "scheme": "dark"
+  },
+  {
+    "id": "frost",
+    "name": {
+      "en": "Frost",
+      "fr": "Givre"
+    },
+    "bg": "#07111F",
+    "surface": "#0D1B2E",
+    "accent": "#7DF9FF",
+    "accent2": "#B8E1FF",
+    "text": "#EAF4FF",
+    "scheme": "dark"
+  },
+  {
+    "id": "daylight",
+    "name": {
+      "en": "Daylight",
+      "fr": "Lumière du jour"
+    },
+    "bg": "#F4F5F7",
+    "surface": "#FFFFFF",
+    "accent": "#5B3DF5",
+    "accent2": "#5B3DF5",
+    "text": "#12141A",
+    "scheme": "light"
+  }
+]

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import GameCard from '../components/GameCard.astro';
+import CategoryChips from '../components/CategoryChips.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { gamesIn } from '../lib/games';
+import { CATEGORIES, path, t, other, type Lang } from '../i18n/ui';
+import { SITE } from '../config/site';
+
+interface Props { lang: Lang; cat: string }
+const { lang, cat } = Astro.props;
+const s = t(lang);
+const c = CATEGORIES.find((x) => x.key === cat)!;
+const list = gamesIn(cat);
+const name = c.name[lang];
+const title = lang === 'fr' ? `Jeux de ${name.toLowerCase()} en ligne — ${s.siteName}` : `${name} games online — ${s.siteName}`;
+const intro = {
+  en: `${list.length} ${name.toLowerCase()} games you can play right in your browser, on phone or computer. Every game has its own page with how-to-play tips in English and French.`,
+  fr: `${list.length} jeux de ${name.toLowerCase()} à jouer directement dans ton navigateur, sur téléphone ou ordinateur. Chaque jeu a sa page avec les règles et les commandes, en français et en anglais.`,
+}[lang];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  url: `${SITE.url}${path.category(lang, cat)}`,
+  inLanguage: lang === 'fr' ? 'fr-CA' : 'en-CA',
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: list.length,
+    itemListElement: list.slice(0, 50).map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE.url}${path.game(lang, g.slug)}`, name: g.title })),
+  },
+};
+---
+<Base lang={lang} title={title} description={intro} altPath={path.category(other(lang), cat)} nav="categories">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="container">
+    <nav class="crumbs" aria-label={lang === 'fr' ? "Fil d'Ariane" : 'Breadcrumb'}>
+      <a href={path.home(lang)}>{s.breadcrumbHome}</a><span aria-hidden="true">/</span><span>{name}</span>
+    </nav>
+    <header class="page-head">
+      <h1 class="page-title">{name}</h1>
+      <p class="page-sub">{intro}</p>
+    </header>
+    <CategoryChips lang={lang} current={cat} />
+    <AdSlot lang={lang} name={`cat-${cat}-top`} format="leader" />
+    <div class="grid" style="margin-top:16px">
+      {list.map((g, i) => <GameCard game={g} lang={lang} eager={i < 6} />)}
+    </div>
+    <AdSlot lang={lang} name={`cat-${cat}-bottom`} format="leader" />
+  </div>
+</Base>

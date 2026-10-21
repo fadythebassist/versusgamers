@@ -1,0 +1,9 @@
+---
+import OriginalPlayView from '../../../views/OriginalPlayView.astro';
+import { ORIGINALS } from '../../../data/originals';
+export function getStaticPaths() {
+  return ORIGINALS.map((o) => ({ params: { slug: o.slug }, props: { original: o } }));
+}
+const { original } = Astro.props;
+---
+<OriginalPlayView lang="en" original={original} />

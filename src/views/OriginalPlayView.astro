@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import OriginalCard from '../components/OriginalCard.astro';
+import { ORIGINALS, type Original } from '../data/originals';
+import { path, t, other, type Lang } from '../i18n/ui';
+import { SITE } from '../config/site';
+
+interface Props { lang: Lang; original: Original }
+const { lang, original: o } = Astro.props;
+const s = t(lang);
+const txt = o.text[lang];
+const title = lang === 'fr' ? `${o.title} — Jeu original | ${s.siteName}` : `${o.title} — Original game | ${s.siteName}`;
+const playerId = `player-${o.slug}`;
+const others = ORIGINALS.filter((x) => x.slug !== o.slug);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: o.title,
+  url: `${SITE.url}${path.original(lang, o.slug)}`,
+  description: txt.description,
+  inLanguage: ['en', 'fr'],
+  gamePlatform: ['Web browser'],
+  applicationCategory: 'Game',
+  operatingSystem: 'Any',
+  playMode: 'SinglePlayer',
+  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD', availability: 'https://schema.org/InStock' },
+  ...(o.cover ? { image: `${SITE.url}${o.cover}` } : {}),
+};
+---
+<Base lang={lang} title={title} description={txt.summary} altPath={path.original(other(lang), o.slug)} nav="originals" ogImage={o.cover} ogType="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="container">
+    <nav class="crumbs" aria-label={lang === 'fr' ? "Fil d'Ariane" : 'Breadcrumb'}>
+      <a href={path.home(lang)}>{s.breadcrumbHome}</a><span aria-hidden="true">/</span>
+      <a href={path.page(lang, 'originals')}>{s.versusOriginals}</a><span aria-hidden="true">/</span>
+      <span>{o.title}</span>
+    </nav>
+    <header class="game-head">
+      <h1 class="game-title">{o.title}</h1>
+      <div class="tags"><span class="tag accent">{s.originalBadge}</span><span class="tag">{txt.tag}</span><span class="tag">{s.noAds}</span></div>
+    </header>
+    <div
+      class="player original"
+      id={playerId}
+      data-player
+      data-src={`/originals/${o.slug}/?lang=${lang}`}
+      data-title={o.title}
+      data-autoload="true"
+      data-game-id={`o:${o.slug}`}
+      data-allow="fullscreen; autoplay; clipboard-write; screen-wake-lock"
+    ></div>
+    <div class="player-bar">
+      <button type="button" class="icon-btn" data-fullscreen={playerId}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+        {s.fullscreen}
+      </button>
+      <button type="button" class="icon-btn fav-btn" data-fav-id={`o:${o.slug}`} aria-pressed="false" data-label-on={s.removeFavorite} data-label-off={s.addFavorite}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
+        <span data-fav-label>{s.addFavorite}</span>
+      </button>
+    </div>
+    <section class="prose" style="padding-top:24px" aria-labelledby="about-game">
+      <h2 class="h2" id="about-game">{s.aboutGame}</h2>
+      <p>{txt.description}</p>
+      <h2 class="h2" style="margin-top:20px">{s.howToPlay}</h2>
+      <p>{txt.howToPlay}</p>
+    </section>
+    <section style="padding-top:24px" aria-labelledby="more-originals">
+      <div class="sec-head"><h2 class="h2" id="more-originals">{s.versusOriginals}</h2><a class="see-all" href={path.page(lang, 'originals')}>{s.seeAll}</a></div>
+      <div class="orig-row">{others.map((x) => <OriginalCard original={x} lang={lang} />)}</div>
+    </section>
+  </div>
+</Base>
+<style>
+  .player.original { aspect-ratio: 16 / 9; }
+  @media (max-width: 899px) { .player.original { aspect-ratio: auto; height: min(78vh, 760px); } }
+</style>

@@ -1,0 +1,7 @@
+---
+import { clientIndex } from '../lib/games';
+import type { Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const json = JSON.stringify(clientIndex(Astro.props.lang)).replace(/</g, '\\u003c');
+---
+<script type="application/json" id="games-index" set:html={json}></script>

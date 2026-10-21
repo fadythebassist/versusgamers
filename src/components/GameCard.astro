@@ -1,0 +1,16 @@
+---
+import type { Game } from '../lib/games';
+import { catName } from '../lib/games';
+import { path, type Lang } from '../i18n/ui';
+interface Props { game: Game; lang: Lang; eager?: boolean }
+const { game, lang, eager = false } = Astro.props;
+---
+<a class="card" href={path.game(lang, game.slug)}>
+  <div class="card-thumb">
+    <img src={game.image} alt="" width="448" height="280" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  </div>
+  <div class="card-body">
+    <div class="card-title">{game.title}</div>
+    <div class="card-meta">{catName(lang, game.category)}</div>
+  </div>
+</a>

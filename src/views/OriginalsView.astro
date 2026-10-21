@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import OriginalCard from '../components/OriginalCard.astro';
+import CategoryChips from '../components/CategoryChips.astro';
+import { ORIGINALS } from '../data/originals';
+import { path, t, other, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const title = `${s.versusOriginals} — ${s.siteName}`;
+---
+<Base lang={lang} title={title} description={s.originalsIntro} altPath={path.page(other(lang), 'originals')} nav="originals">
+  <div class="container">
+    <header class="page-head">
+      <h1 class="page-title">{s.versusOriginals}</h1>
+      <p class="page-sub">{s.originalsIntro}</p>
+    </header>
+    <CategoryChips lang={lang} current="originals" />
+    <div class="orig-list">
+      {ORIGINALS.map((o) => (
+        <article class="orig-item">
+          <OriginalCard original={o} lang={lang} />
+          <div class="orig-info">
+            <h2 class="h2">{o.title}</h2>
+            <p>{o.text[lang].description}</p>
+            <div class="hero-actions">
+              <a class="btn-play" href={path.original(lang, o.slug)}><span>{s.play}</span></a>
+              <span class="tag">{s.noAds}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>
+<style>
+  .orig-list { display: grid; gap: 24px; padding-top: 20px; }
+  .orig-item { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  .orig-item :global(.orig-card) { flex: 0 1 320px; min-width: 0; width: 100%; }
+  .orig-info { flex: 1 1 320px; min-width: 0; display: grid; gap: 10px; }
+  .orig-info p { margin: 0; color: var(--body); max-width: 65ch; }
+</style>

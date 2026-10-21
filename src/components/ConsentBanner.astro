@@ -1,0 +1,18 @@
+---
+import { t, path, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+---
+<div class="consent" id="consent" role="region" aria-label={s.consentTitle} hidden>
+  <div class="consent-inner">
+    <div class="consent-text">
+      <strong>{s.consentTitle}</strong>
+      <p>{s.consentText} <a href={path.page(lang, 'privacy')}>{s.consentMore}</a></p>
+    </div>
+    <div class="consent-actions">
+      <button type="button" class="btn-secondary" data-consent="denied">{s.consentDecline}</button>
+      <button type="button" class="btn-play" data-consent="granted"><span>{s.consentAccept}</span></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+---
+// Search, Favorites and Recently played: rendered in the browser from a compact game index,
+// because they depend on what the visitor typed or saved on this device.
+import Base from '../layouts/Base.astro';
+import IndexData from '../components/IndexData.astro';
+import CategoryChips from '../components/CategoryChips.astro';
+import { path, t, other, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; kind: 'search' | 'favorites' | 'recent' }
+const { lang, kind } = Astro.props;
+const s = t(lang);
+const head = {
+  search: { title: s.searchGames, sub: lang === 'fr' ? 'Tape un titre, un genre ou un mot-clé.' : 'Type a title, a genre or a keyword.' },
+  favorites: { title: s.nav.favorites, sub: lang === 'fr' ? 'Les jeux que tu as ajoutés à tes favoris sur cet appareil.' : 'Games you saved as favorites on this device.' },
+  recent: { title: s.nav.recent, sub: lang === 'fr' ? 'Les derniers jeux que tu as ouverts sur cet appareil.' : 'The games you opened most recently on this device.' },
+}[kind];
+---
+<Base lang={lang} title={`${head.title} — ${s.siteName}`} description={head.sub} altPath={path.page(other(lang), kind)} nav={kind === 'search' ? undefined : kind} noindex={kind !== 'search'}>
+  <div class="container">
+    <header class="page-head">
+      <h1 class="page-title">{head.title}</h1>
+      <p class="page-sub">{head.sub}</p>
+    </header>
+    {kind === 'search' && (
+      <>
+        <label class="search-box" for="search-input">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+          <span class="sr-only">{s.searchGames}</span>
+          <input id="search-input" type="search" autocomplete="off" placeholder={s.searchPlaceholder} enterkeyhint="search" />
+        </label>
+        <p class="note" id="search-count" aria-live="polite" style="margin:10px 0 0"></p>
+        <div class="grid" id="search-results" style="margin-top:12px"></div>
+        <p class="empty-state" id="search-results-empty" hidden>{s.noResults}</p>
+      </>
+    )}
+    {kind === 'favorites' && (
+      <>
+        <CategoryChips lang={lang} current="favorites" />
+        <div class="grid" id="list-favorites" style="margin-top:12px"></div>
+        <p class="empty-state" id="list-favorites-empty" hidden>{s.emptyFavorites}</p>
+      </>
+    )}
+    {kind === 'recent' && (
+      <>
+        <div class="grid" id="list-recent" style="margin-top:12px"></div>
+        <p class="empty-state" id="list-recent-empty" hidden>{s.emptyRecent}</p>
+        <button type="button" class="btn-secondary" data-clear-recent style="margin-top:16px">{s.clearRecent}</button>
+      </>
+    )}
+  </div>
+  <IndexData lang={lang} />
+</Base>

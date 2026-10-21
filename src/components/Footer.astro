@@ -1,0 +1,21 @@
+---
+import { t, path, type Lang } from '../i18n/ui';
+import { SITE } from '../config/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <nav class="footer-links" aria-label={lang === 'fr' ? 'Pied de page' : 'Footer'}>
+      <a href={path.page(lang, 'about')}>{lang === 'fr' ? 'À propos' : 'About'}</a>
+      <a href={path.page(lang, 'privacy')}>{lang === 'fr' ? 'Confidentialité' : 'Privacy'}</a>
+      <a href={path.page(lang, 'terms')}>{lang === 'fr' ? "Conditions d'utilisation" : 'Terms'}</a>
+      <a href={path.page(lang, 'contact')}>Contact</a>
+      <a href={path.page(lang, 'favorites')}>{s.nav.favorites}</a>
+      <a href={path.page(lang, 'recent')}>{s.nav.recent}</a>
+      <button type="button" data-open-consent>{s.privacyChoices}</button>
+    </nav>
+    <p class="footer-note">{s.footerNote} © {SITE.launched} {SITE.name}. {s.rights}</p>
+  </div>
+</footer>

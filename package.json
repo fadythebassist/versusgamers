@@ -1,0 +1,38 @@
+{
+  "name": "versusgamers",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Versus Gamers — bilingual browser games portal (versusgamers.com)",
+  "scripts": {
+    "gen": "node scripts/gen-skins.mjs && node scripts/build-fonts.mjs",
+    "prebuild": "npm run gen",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:games": "node scripts/check-games.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.1"
+  },
+  "devDependencies": {
+    "@fontsource/barlow": "^5.3.0",
+    "@fontsource/chakra-petch": "^5.3.0",
+    "@fontsource/exo-2": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "@fontsource/oswald": "^5.3.0",
+    "@fontsource/press-start-2p": "^5.3.0",
+    "@fontsource/rajdhani": "^5.3.0",
+    "@fontsource/share-tech-mono": "^5.3.0",
+    "@fontsource/sora": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.1",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0"
+  }
+}

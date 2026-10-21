@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { path } from '../i18n/ui';
+---
+<Base lang="en" title="Page not found · Page introuvable — Versus Gamers" description="This page doesn't exist. Cette page n'existe pas." altPath="/fr/" noindex>
+  <div class="container">
+    <header class="page-head" style="padding-block:48px 16px">
+      <div class="kicker">404</div>
+      <h1 class="page-title">Page not found</h1>
+      <p class="page-sub">This page doesn't exist or has moved.</p>
+      <p class="page-sub" lang="fr">Cette page n’existe pas ou a été déplacée.</p>
+    </header>
+    <div class="hero-actions">
+      <a class="btn-play" href={path.home('en')}><span>Back to the games</span></a>
+      <a class="btn-secondary" href={path.home('fr')} lang="fr">Retour aux jeux</a>
+    </div>
+  </div>
+</Base>

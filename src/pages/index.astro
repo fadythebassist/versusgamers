@@ -1,0 +1,37 @@
+---
+// Root: sends visitors to /fr/ or /en/ based on their saved choice or browser language.
+import { SITE } from '../config/site';
+const go = `(function(){var l='en';try{var s=localStorage.getItem('vg.lang');if(s==='fr'||s==='en'){l=s;}else{var n=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'']);for(var i=0;i<n.length;i++){var c=String(n[i]).toLowerCase();if(c.indexOf('fr')===0){l='fr';break;}if(c.indexOf('en')===0){break;}}}}catch(e){}location.replace('/'+l+'/');})();`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Versus Gamers — Browser games in English and French · Jeux en ligne en français et en anglais</title>
+    <meta name="description" content="Play browser games in English or French. Joue à des jeux en ligne en français ou en anglais." />
+    <link rel="canonical" href={`${SITE.url}/`} />
+    <link rel="alternate" hreflang="en" href={`${SITE.url}/en/`} />
+    <link rel="alternate" hreflang="fr" href={`${SITE.url}/fr/`} />
+    <link rel="alternate" hreflang="x-default" href={`${SITE.url}/`} />
+    <meta name="theme-color" content="#0A0A12" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <script is:inline set:html={go}></script>
+    <style>
+      html, body { margin: 0; background: #0A0A12; color: #F4F4FA; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      main { min-height: 100vh; display: grid; place-items: center; padding: 24px; text-align: center; }
+      a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; margin: 6px; background: #FF2E88; color: #0A0A12; font-weight: 700; text-decoration: none; }
+      a + a { background: #22E4FF; }
+      h1 { font-size: 28px; letter-spacing: 0.06em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div>
+        <h1>VERSUS GAMERS</h1>
+        <p><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/en/" hreflang="en">English</a></p>
+      </div>
+    </main>
+  </body>
+</html>

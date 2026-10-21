@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroArt from '../components/HeroArt.astro';
+import PlayLabel from '../components/PlayLabel.astro';
+import GameCard from '../components/GameCard.astro';
+import OriginalCard from '../components/OriginalCard.astro';
+import CategoryChips from '../components/CategoryChips.astro';
+import AdSlot from '../components/AdSlot.astro';
+import RankList from '../components/RankList.astro';
+import { ORIGINALS } from '../data/originals';
+import { popular, gamesIn, GAMES } from '../lib/games';
+import { CATEGORIES, path, t, other, type Lang } from '../i18n/ui';
+import { SITE } from '../config/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const featured = ORIGINALS[0];
+const top = popular(36);
+const popularGrid = top.slice(0, 12);
+const picks = top.slice(12, 17);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: `${SITE.url}${path.home(lang)}`,
+  inLanguage: lang === 'fr' ? 'fr-CA' : 'en-CA',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE.url}${path.page(lang, 'search')}?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+<Base lang={lang} title={s.homeTitle} description={s.homeDescription} altPath={path.home(other(lang))} nav="home">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="container">
+    <h1 class="sr-only">{s.siteName} — {s.tagline}</h1>
+
+    <section class="hero-card" aria-labelledby="hero-title">
+      <div class="hero-art"><HeroArt lang={lang} /></div>
+      <div class="hero-text">
+        <div class="kicker">{s.originalNew}</div>
+        <h2 class="hero-title" id="hero-title">{featured.title}</h2>
+        <p>{featured.text[lang].description.split('. ')[0]}. {lang === 'fr' ? 'Un nouveau mot chaque jour, en français et en anglais.' : 'A new word every day, in English and French.'}</p>
+        <div class="hero-actions">
+          <a class="btn-play" href={path.original(lang, featured.slug)}><PlayLabel lang={lang} /></a>
+          <a class="btn-secondary" href={path.page(lang, 'originals')}>{s.allOriginals}</a>
+        </div>
+      </div>
+    </section>
+
+    <AdSlot lang={lang} name="home-leader" format="leader" class="desk-only" />
+
+    <CategoryChips lang={lang} current="all" />
+
+    <div class="with-rail">
+      <div class="main-col">
+        <section aria-labelledby="sec-originals">
+          <div class="sec-head">
+            <h2 class="h2" id="sec-originals">{s.versusOriginals}</h2>
+            <a class="see-all" href={path.page(lang, 'originals')}>{s.seeAll}</a>
+          </div>
+          <div class="orig-row">
+            {ORIGINALS.map((o) => <OriginalCard original={o} lang={lang} />)}
+          </div>
+        </section>
+
+        <AdSlot lang={lang} name="home-mobile" format="mobile" class="phone-only" />
+
+        <section aria-labelledby="sec-popular">
+          <div class="sec-head">
+            <h2 class="h2" id="sec-popular">{s.popularNow}</h2>
+            <a class="see-all" href={path.page(lang, 'search')}>{s.seeAll}</a>
+          </div>
+          <div class="grid">
+            {popularGrid.map((g, i) => <GameCard game={g} lang={lang} eager={i < 4} />)}
+          </div>
+        </section>
+
+        {CATEGORIES.map((c) => {
+          const list = gamesIn(c.key).filter((g) => !popularGrid.includes(g)).slice(0, 6);
+          return list.length > 0 && (
+            <section aria-labelledby={`sec-${c.key}`}>
+              <div class="sec-head">
+                <h2 class="h2" id={`sec-${c.key}`}>{c.name[lang]}</h2>
+                <a class="see-all" href={path.category(lang, c.key)}>{s.seeAll} ({gamesIn(c.key).length})</a>
+              </div>
+              <div class="grid">
+                {list.map((g) => <GameCard game={g} lang={lang} />)}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <div class="rail">
+        <AdSlot lang={lang} name="home-rail" format="rect" />
+        <RankList games={picks} lang={lang} title={s.topPicks} />
+        <p class="note">{GAMES.length + ORIGINALS.length} {s.games} · {lang === 'fr' ? 'Mis à jour régulièrement' : 'Updated regularly'}</p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .desk-only { margin-top: 20px; }
+  @media (max-width: 899px) { .desk-only { display: none !important; } }
+  @media (min-width: 900px) { .phone-only { display: none !important; } }
+</style>

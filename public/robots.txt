@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /en/favorites/
+Disallow: /fr/favoris/
+Disallow: /en/recent/
+Disallow: /fr/recents/
+
+Sitemap: https://versusgamers.com/sitemap-index.xml

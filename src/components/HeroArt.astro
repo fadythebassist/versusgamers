@@ -1,0 +1,63 @@
+---
+// Decorative hero art, one variant per skin (CSS shows the variant for the active skin).
+// Ported from the design canvas; sizes come from the --big/--mid/... custom properties on .hero-art.
+import type { Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<div class="hero-v hero-v--split" aria-hidden="true">
+  <div class="hv-abs" style="inset:0;background:#0D2B36;clip-path:polygon(0 0,60% 0,40% 100%,0 100%)"></div>
+  <div class="hv-abs" style="inset:0;background:#3A0F2B;clip-path:polygon(60% 0,100% 0,100% 100%,40% 100%)"></div>
+  <div class="hv-abs" style="left:7%;top:12%;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:var(--big);line-height:1;color:#22E4FF">FR</div>
+  <div class="hv-abs" style="right:7%;bottom:12%;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:var(--big);line-height:1;color:#FF2E88">EN</div>
+  <div class="hv-abs" style="left:50%;top:50%;transform:translate(-50%,-50%) skewX(-12deg);background:#F4F4FA;color:#0A0A12;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:var(--mid);padding:6px 14px">VS</div>
+</div>
+
+<div class="hero-v hero-v--sunset" aria-hidden="true">
+  <div class="hv-abs" style="left:16px;top:14px;font-family:'Press Start 2P',monospace;font-size:11px;color:#6CF0FF">1P · FR</div>
+  <div class="hv-abs" style="right:16px;top:14px;font-family:'Press Start 2P',monospace;font-size:11px;color:#FF5CDB">2P · EN</div>
+  <div class="hv-abs" style="left:50%;top:20%;height:75%;aspect-ratio:1/1;transform:translateX(-50%);border-radius:50%;background:#FFB547"></div>
+  <div class="hv-abs" style="left:0;right:0;top:50%;height:2.5%;background:#140A26"></div>
+  <div class="hv-abs" style="left:0;right:0;top:56.5%;height:3%;background:#140A26"></div>
+  <div class="hv-abs" style="left:0;right:0;top:63.5%;height:4%;background:#140A26"></div>
+  <div class="hv-abs" style="left:50%;top:31%;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:var(--vs);color:#140A26">VS</div>
+  <svg class="hv-abs" style="left:0;bottom:0;width:100%;height:33%" viewBox="0 0 400 66" preserveAspectRatio="none" fill="none" stroke="#FF5CDB" stroke-width="1.5" stroke-opacity="0.75"><path d="M0 1H400M0 9H400M0 20H400M0 36H400M0 58H400M200 1V66M200 1L140 66M200 1L260 66M200 1L70 66M200 1L330 66M200 1L0 66M200 1L400 66M200 1L-80 50M200 1L480 50"></path></svg>
+</div>
+
+<div class="hero-v hero-v--glyph" aria-hidden="true">
+  <div class="hv-abs" style="inset:0;display:flex;align-items:center;justify-content:center;gap:5%">
+    <span style="font-family:var(--f-display);font-weight:var(--w-display);font-size:var(--glyph);line-height:1;letter-spacing:-0.04em;color:var(--glyph-a)">Aa</span>
+    <span style="width:2px;height:40%;background:var(--glyph-div)"></span>
+    <span style="font-family:var(--f-display);font-weight:var(--w-display);font-size:var(--glyph);line-height:1;letter-spacing:-0.04em;color:var(--glyph-b)">Éé</span>
+  </div>
+</div>
+
+<div class="hero-v hero-v--glitch" aria-hidden="true">
+  <div class="hv-abs" style="left:0;right:0;bottom:0;height:13%;background:repeating-linear-gradient(-45deg,#0D0D0D 0 16px,#FCEE0A 16px 32px)"></div>
+  <div class="hv-abs" style="left:16px;top:14px;font-family:'Share Tech Mono',monospace;font-size:13px;color:#0D0D0D">SYS.DUEL_01</div>
+  <div class="hv-abs" style="right:16px;top:14px;font-family:'Share Tech Mono',monospace;font-size:13px;color:#0D0D0D">[LIVE]</div>
+  <div class="hv-abs" style="left:50%;top:46%;transform:translate(-50%,-50%);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:var(--big);line-height:1;white-space:nowrap;color:#0D0D0D;text-shadow:5px 0 #3DF2F2,-5px 0 #FF3B3B">FR//EN</div>
+</div>
+
+<div class="hero-v hero-v--terminal" aria-hidden="true">
+  <div class="hv-abs" style="inset:0;padding:var(--pad);display:flex;flex-direction:column;justify-content:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:var(--mono);line-height:1.5;color:#39FF6A;white-space:nowrap">
+    <div>&gt; versus --mode duel</div>
+    <div>&gt; load lang=FR [##########] ok</div>
+    <div>&gt; load lang=EN [##########] ok</div>
+    <div style="color:#FFD23F">&gt; {lang === 'fr' ? 'mot du jour' : 'word of the day'}: _ _ _ _ _</div>
+    <div>&gt; ready<span style="display:inline-block;width:0.6em;height:1.1em;margin-left:4px;vertical-align:text-bottom;background:#39FF6A"></span></div>
+  </div>
+</div>
+
+<div class="hero-v hero-v--trophy" aria-hidden="true">
+  <div class="hv-abs" style="left:50%;top:10%;transform:translateX(-50%);font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.35em;color:#A89F8C;white-space:nowrap">SEASON 01</div>
+  <div class="hv-abs" style="left:12%;top:54%;transform:translateY(-50%);font-family:'Oswald',sans-serif;font-weight:700;font-size:var(--big);line-height:1;color:#F6F1E6">FR</div>
+  <div class="hv-abs" style="right:12%;top:54%;transform:translateY(-50%);font-family:'Oswald',sans-serif;font-weight:700;font-size:var(--big);line-height:1;color:#F6F1E6">EN</div>
+  <div class="hv-abs" style="left:50%;top:54%;width:var(--diamond);height:var(--diamond);transform:translate(-50%,-50%) rotate(45deg);border:2px solid #E8B931;background:#15130F"></div>
+  <div class="hv-abs" style="left:50%;top:54%;transform:translate(-50%,-50%);font-family:'Oswald',sans-serif;font-weight:700;font-size:var(--mid);line-height:1;color:#E8B931">VS</div>
+</div>
+
+<div class="hero-v hero-v--frost" aria-hidden="true">
+  <svg class="hv-abs" style="inset:0;width:100%;height:100%" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#7DF9FF" stroke-opacity="0.55" stroke-width="1.2"><path d="M30 200L80 50L125 200ZM105 200L155 85L200 200ZM265 200L310 35L360 200ZM220 200L250 110L285 200ZM335 200L375 120L400 200M80 50L100 110M310 35L330 100M155 85L170 130"></path></svg>
+  <div class="hv-abs" style="left:50%;top:42%;transform:translate(-50%,-50%);font-family:'Exo 2',sans-serif;font-weight:700;font-size:var(--mid);letter-spacing:0.2em;white-space:nowrap;color:#EAF4FF">FR · EN</div>
+</div>

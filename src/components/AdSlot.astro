@@ -1,0 +1,12 @@
+---
+// A reserved AdSense slot. While ADSENSE.client is empty (before approval) the slot is collapsed
+// and takes no space. After approval, set ADSENSE.client and the slot ids in src/config/site.ts.
+import { ADSENSE } from '../config/site';
+import { t, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; name: string; format: 'leader' | 'rect' | 'mobile'; class?: string }
+const { lang, name, format, class: cls = '' } = Astro.props;
+const on = Boolean(ADSENSE.client);
+---
+<aside class={`ad-slot ad-${format} ${cls}`} data-ad-slot={name} data-state={on ? 'on' : 'off'} aria-label={t(lang).adLabel}>
+  {on && <span class="ad-label">{t(lang).adLabel}</span>}
+</aside>

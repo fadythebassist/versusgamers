@@ -1,0 +1,10 @@
+---
+import CategoryView from '../../../views/CategoryView.astro';
+import { CATEGORIES } from '../../../i18n/ui';
+import { gamesIn } from '../../../lib/games';
+export function getStaticPaths() {
+  return CATEGORIES.filter((c) => gamesIn(c.key).length > 0).map((c) => ({ params: { slug: c.slug.en }, props: { cat: c.key } }));
+}
+const { cat } = Astro.props;
+---
+<CategoryView lang="en" cat={cat} />

@@ -1,0 +1,24 @@
+---
+import type { Game } from '../lib/games';
+import { catName } from '../lib/games';
+import { path, type Lang } from '../i18n/ui';
+interface Props { games: Game[]; lang: Lang; title: string; numbered?: boolean }
+const { games, lang, title, numbered = true } = Astro.props;
+---
+<section class="rail-card">
+  <h2 class="h2">{title}</h2>
+  <ol class="rank-list">
+    {games.map((g, i) => (
+      <li>
+        <a class="rank-row" href={path.game(lang, g.slug)}>
+          {numbered && <span class="rank-num">{i + 1}</span>}
+          <span class="rank-thumb"><img src={g.image} alt="" width="112" height="80" loading="lazy" decoding="async" /></span>
+          <span style="display:flex;flex-direction:column;min-width:0">
+            <span class="card-title">{g.title}</span>
+            <span class="card-meta">{catName(lang, g.category)}</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>

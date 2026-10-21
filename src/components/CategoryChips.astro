@@ -1,0 +1,15 @@
+---
+import { CATEGORIES, path, t, type Lang } from '../i18n/ui';
+import { gamesIn } from '../lib/games';
+interface Props { lang: Lang; current?: string }
+const { lang, current } = Astro.props;
+const s = t(lang);
+---
+<nav class="chips" aria-label={s.nav.categories}>
+  <a class="chip" href={path.home(lang)} aria-current={current === 'all' ? 'page' : undefined}>{s.allGames}</a>
+  {CATEGORIES.filter((c) => gamesIn(c.key).length > 0).map((c) => (
+    <a class="chip" href={path.category(lang, c.key)} aria-current={current === c.key ? 'page' : undefined}>{c.name[lang]}</a>
+  ))}
+  <a class="chip phone-chip" href={path.page(lang, 'originals')} aria-current={current === 'originals' ? 'page' : undefined}>{s.nav.originals}</a>
+  <a class="chip phone-chip" href={path.page(lang, 'favorites')} aria-current={current === 'favorites' ? 'page' : undefined}>{s.nav.favorites}</a>
+</nav>
