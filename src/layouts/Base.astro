@@ -20,8 +20,10 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   noindex?: boolean;
+  /** Set false on pages that have no language pair (e.g. 404). */
+  hreflang?: boolean;
 }
-const { lang, title, description, altPath, nav, ogImage = '/images/og-default.jpg', ogType = 'website', noindex = false } = Astro.props;
+const { lang, title, description, altPath, nav, ogImage = '/images/og-default.jpg', ogType = 'website', noindex = false, hreflang = true } = Astro.props;
 const s = t(lang);
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const alternate = new URL(altPath, SITE.url).href;
@@ -44,10 +46,10 @@ const noFlash = `(function(){var ids=${JSON.stringify(skinIds)},tc=${JSON.string
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="fr" href={frUrl} />
-    <link rel="alternate" hreflang="x-default" href={`${SITE.url}/`} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {hreflang && !noindex && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {hreflang && !noindex && <link rel="alternate" hreflang="fr" href={frUrl} />}
+    {hreflang && !noindex && <link rel="alternate" hreflang="x-default" href={`${SITE.url}/`} />}
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
