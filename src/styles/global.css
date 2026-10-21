@@ -151,7 +151,7 @@ html[data-skin="synthwave"] .btn-play svg, html[data-skin="terminal"] .btn-play 
   letter-spacing: var(--track); text-transform: var(--upper); color: var(--text);
 }
 .hero-text p { margin: 0; color: var(--body); max-width: 46ch; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px; }
 @media (min-width: 900px) {
   .hero-art { height: 380px; }
   .hero-text { padding: 40px; gap: 14px; }
