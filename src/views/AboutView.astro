@@ -34,24 +34,24 @@ const desc = kind === 'about'
     )}
     {kind === 'about' && lang === 'fr' && (
       <article class="legal">
-        <p>Versus Gamers est un site de jeux en ligne créé à {SITE.location.fr}, en français et en anglais. Tu peux jouer à {n} jeux choisis avec soin et à {ORIGINALS.length} jeux de notre cru sur téléphone ou ordinateur, sans rien installer et sans compte.</p>
+        <p>Versus Gamers est un site de jeux en ligne créé à {SITE.location.fr}, en français et en anglais. Vous pouvez jouer à {n} jeux choisis avec soin et à {ORIGINALS.length} jeux de notre cru sur téléphone ou ordinateur, sans rien installer et sans compte.</p>
         <h2>Comment nous choisissons les jeux</h2>
         <p>La plupart des jeux viennent de notre partenaire Playgama. Nous partons de son catalogue et gardons les jeux qui fonctionnent sur téléphone et ordinateur, puis nous écartons les jeux destinés aux jeunes enfants, les imitations de marques connues, les jeux de casino, d’horreur et de crime. Chaque jeu a sa page avec une description et des conseils que nous rédigeons nous-mêmes, dans les deux langues.</p>
         <h2>Nos originaux</h2>
-        <p>Lexi Duel, Neon Merge et Rift Runner sont créés par Versus Gamers. Ils fonctionnent en français et en anglais, n’affichent aucune publicité et enregistrent ta progression sur ton appareil.</p>
-        <h2>À ton goût</h2>
-        <p>Choisis un des huit thèmes avec le bouton palette en haut de chaque page. Ton choix est gardé sur ton appareil.</p>
+        <p>Lexi Duel, Neon Merge et Rift Runner sont créés par Versus Gamers. Ils fonctionnent en français et en anglais, n’affichent aucune publicité et enregistrent votre progression sur votre appareil.</p>
+        <h2>À votre goût</h2>
+        <p>Choisissez un des huit thèmes avec le bouton palette en haut de chaque page. Votre choix est gardé sur votre appareil.</p>
         <p><a href={path.page(lang, 'contact')}>Nous écrire</a></p>
       </article>
     )}
     {kind === 'contact' && (
       <article class="legal">
         <p>{lang === 'fr'
-          ? 'Une question, un jeu qui ne fonctionne pas, une suggestion ou une demande concernant tes renseignements personnels? Écris-nous :'
+          ? 'Une question, un jeu qui ne fonctionne pas, une suggestion ou une demande concernant vos renseignements personnels? Écrivez-nous :'
           : 'A question, a game that doesn’t work, a suggestion, or a request about your personal information? Write to us:'}</p>
         <p style="font-size:20px;font-weight:700;user-select:all"><a href={`mailto:${email}`}>{email}</a></p>
         <p>{lang === 'fr'
-          ? 'Pour signaler un problème avec un jeu, indique son nom et ton appareil (téléphone ou ordinateur, et navigateur). Nous répondons habituellement en quelques jours.'
+          ? 'Pour signaler un problème avec un jeu, indiquez son nom et votre appareil (téléphone ou ordinateur, et navigateur). Nous répondons habituellement en quelques jours.'
           : 'To report a problem with a game, include its name and your device (phone or computer, and browser). We usually reply within a few days.'}</p>
       </article>
     )}

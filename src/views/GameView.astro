@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import PlayLabel from '../components/PlayLabel.astro';
 import GameCard from '../components/GameCard.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { related, catName, embedFor, type Game } from '../lib/games';
+import RankList from '../components/RankList.astro';
+import { related, catName, embedFor, popular, type Game } from '../lib/games';
 import { path, t, other, type Lang } from '../i18n/ui';
 import { SITE, PLAYGAMA } from '../config/site';
 
@@ -41,6 +42,7 @@ const breadcrumbLd = {
   ],
 };
 const playerId = `player-${game.slug}`;
+const picks = popular(8).filter((g) => g.slug !== game.slug && !more.includes(g)).slice(0, 5);
 ---
 <Base lang={lang} title={title} description={txt.summary} altPath={path.game(other(lang), game.slug)} ogImage={game.image} ogType="article">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -118,6 +120,7 @@ const playerId = `player-${game.slug}`;
       </div>
       <div class="rail">
         <AdSlot lang={lang} name="game-rail" format="rect" />
+        <RankList games={picks} lang={lang} title={s.popularNow} />
       </div>
     </div>
   </div>

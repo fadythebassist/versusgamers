@@ -182,7 +182,7 @@ function initPlayers() {
 }
 
 /* ---------------- Lists: favorites, recent, search ---------------- */
-interface IndexItem { id: string; title: string; url: string; img?: string; cat: string; sum: string; glyph?: string; bg?: string; fg?: string }
+interface IndexItem { id: string; title: string; url: string; img?: string; cat: string; sum: string; kw?: string; glyph?: string; bg?: string; fg?: string }
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -227,7 +227,7 @@ function initLists() {
       const words = q.split(/\s+/).filter(Boolean);
       const hits = !words.length ? index : index
         .map((g) => {
-          const title = norm(g.title), hay = `${title} ${norm(g.cat)} ${norm(g.sum)}`;
+          const title = norm(g.title), hay = `${title} ${norm(g.cat)} ${norm(g.sum)} ${norm(g.kw || '')}`;
           if (!words.every((w) => hay.includes(w))) return null;
           const score = (title.startsWith(q) ? 3 : 0) + (title.includes(q) ? 2 : 0) + words.filter((w) => title.includes(w)).length;
           return { g, score };

@@ -10,9 +10,9 @@ interface Props { lang: Lang; kind: 'search' | 'favorites' | 'recent' }
 const { lang, kind } = Astro.props;
 const s = t(lang);
 const head = {
-  search: { title: s.searchGames, sub: lang === 'fr' ? 'Tape un titre, un genre ou un mot-clé.' : 'Type a title, a genre or a keyword.' },
-  favorites: { title: s.nav.favorites, sub: lang === 'fr' ? 'Les jeux que tu as ajoutés à tes favoris sur cet appareil.' : 'Games you saved as favorites on this device.' },
-  recent: { title: s.nav.recent, sub: lang === 'fr' ? 'Les derniers jeux que tu as ouverts sur cet appareil.' : 'The games you opened most recently on this device.' },
+  search: { title: s.searchGames, sub: lang === 'fr' ? 'Tapez un titre, un genre ou un mot-clé.' : 'Type a title, a genre or a keyword.' },
+  favorites: { title: s.nav.favorites, sub: lang === 'fr' ? 'Les jeux que vous avez ajoutés à vos favoris sur cet appareil.' : 'Games you saved as favorites on this device.' },
+  recent: { title: s.nav.recent, sub: lang === 'fr' ? 'Les derniers jeux que vous avez ouverts sur cet appareil.' : 'The games you opened most recently on this device.' },
 }[kind];
 ---
 <Base lang={lang} title={`${head.title} — ${s.siteName}`} description={head.sub} altPath={path.page(other(lang), kind)} nav={kind === 'search' ? undefined : kind} noindex={kind !== 'search'}>
@@ -48,5 +48,5 @@ const head = {
       </>
     )}
   </div>
-  <IndexData lang={lang} />
+  <IndexData lang={lang} keywords={kind === 'search'} />
 </Base>

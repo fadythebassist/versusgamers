@@ -36,7 +36,7 @@ export function related(g: Game, n = 6) {
 }
 
 /** Compact index used by search, favorites and recently played (client-side). */
-export function clientIndex(lang: Lang) {
+export function clientIndex(lang: Lang, withKeywords = false) {
   const s = t(lang);
   const games = [...GAMES].sort(byRank).map((g) => ({
     id: `g:${g.slug}`,
@@ -45,6 +45,7 @@ export function clientIndex(lang: Lang) {
     img: g.image,
     cat: catName(lang, g.category),
     sum: g[lang].summary,
+    ...(withKeywords ? { kw: `${g[lang].description} ${g.genres.join(' ')}` } : {}),
   }));
   const originals = ORIGINALS.map((o: Original, i) => ({
     id: `o:${o.slug}`,
@@ -53,6 +54,7 @@ export function clientIndex(lang: Lang) {
     img: o.cover,
     cat: `${s.originalBadge} · ${o.text[lang].tag}`,
     sum: o.text[lang].summary,
+    ...(withKeywords ? { kw: o.text[lang].description } : {}),
     glyph: o.glyph,
     bg: `var(--orig${i + 1}-bg)`,
     fg: `var(--orig${i + 1}-fg)`,
