@@ -86,6 +86,17 @@
     return best;
   }
 
+  // Unsorted solid intervals [a0,a1,b0,b1,...] in `buf` (n intervals): sorts them in place and
+  // returns the widest free width left inside the corridor. Used to keep laser + hazard combos fair.
+  function maxFreeWidth(buf, n) {
+    for (var i = 1; i < n; i++) {
+      var a = buf[i * 2], b = buf[i * 2 + 1], j = i - 1;
+      while (j >= 0 && buf[j * 2] > a) { buf[(j + 1) * 2] = buf[j * 2]; buf[(j + 1) * 2 + 1] = buf[j * 2 + 1]; j--; }
+      buf[(j + 1) * 2] = a; buf[(j + 1) * 2 + 1] = b;
+    }
+    return widestGap(buf, n, 0);
+  }
+
   // Small, fast seeded PRNG (mulberry32). Created once per run.
   function rng(seed) {
     var a = seed >>> 0;
@@ -103,6 +114,6 @@
     clamp: clamp, lerp: lerp, approach: approach,
     speedAt: speedAt, difficulty: difficulty, rowInterval: rowInterval, gapWidth: gapWidth,
     sweptCircleBox: sweptCircleBox, sweptCircleCircle: sweptCircleCircle, segmentsHit: segmentsHit,
-    laserHits: laserHits, gapSegments: gapSegments, widestGap: widestGap, rng: rng
+    laserHits: laserHits, gapSegments: gapSegments, widestGap: widestGap, maxFreeWidth: maxFreeWidth, rng: rng
   };
 });
