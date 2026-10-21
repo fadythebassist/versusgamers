@@ -23,7 +23,7 @@ All URLs are relative, so the folder works from any path and can be zipped as-is
 
 **Storage:** everything is saved in `localStorage` under keys starting with `vg.lexi-duel.`: settings, stats and streaks per mode and language, the daily board and the endless run. If storage is blocked, the game still plays; progress just isn't kept.
 
-**Optional background:** drop an image at `assets/bg.webp` and it's shown darkened behind the board. Without it, the game uses a CSS background. The 404 check for the missing file is the only extra request the game makes.
+**Background:** if `assets/bg.webp` exists, it's shown darkened behind the board. Without it, the game uses its CSS background; the only side effect is one 404 for the missing file in the browser log.
 
 ## Word lists
 

@@ -45,6 +45,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## Optional background
+## Background image
 
-If `assets/bg.webp` is added later, record its source and license here.
+`assets/bg.webp` was added separately by the site build (commit bd8334d: artwork chosen by the site owner, made with Higgsfield). It is not part of the game code. Before submitting this folder to other portals, confirm the image's terms allow redistribution, or delete it: the game falls back to its CSS background.
