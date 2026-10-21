@@ -21,7 +21,7 @@ interface Props {
   ogType?: string;
   noindex?: boolean;
 }
-const { lang, title, description, altPath, nav, ogImage = '/images/og-default.png', ogType = 'website', noindex = false } = Astro.props;
+const { lang, title, description, altPath, nav, ogImage = '/images/og-default.jpg', ogType = 'website', noindex = false } = Astro.props;
 const s = t(lang);
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const alternate = new URL(altPath, SITE.url).href;
@@ -58,7 +58,8 @@ const noFlash = `(function(){var ids=${JSON.stringify(skinIds)},tc=${JSON.string
     <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_CA' : 'fr_CA'} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <slot name="head" />
