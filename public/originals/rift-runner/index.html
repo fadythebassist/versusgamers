@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05060F">
+<meta name="description" content="Rift Runner: an original neon arcade runner. Dodge hazards, collect shards, level up your pilot and upgrade your craft.">
+<title>Rift Runner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="view" aria-hidden="true"></canvas>
+
+  <!-- In-run HUD -->
+  <div id="hud" class="hud" hidden>
+    <div class="hud-top">
+      <div class="hud-stats">
+        <div class="hud-dist"><span id="hudDist">0</span><small>m</small></div>
+        <div class="hud-sub">
+          <span class="shard-ico" aria-hidden="true"></span><span id="hudShards">0</span>
+          <span class="hud-speed" id="hudSpeed"></span>
+        </div>
+      </div>
+      <div class="hud-buttons">
+        <button type="button" id="btnSoundHud" class="icon-btn js-sound" data-i18n-aria="sound">
+          <svg class="ico-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          <svg class="ico-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" id="btnPause" class="icon-btn" data-i18n-aria="pauseBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hud-powers" id="hudPowers">
+      <div class="chip chip-shield" id="chipShield" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3-1 8-6 7-6-7-1-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span class="chip-label" data-i18n="shieldUp"></span><span class="chip-bar"><i></i></span>
+      </div>
+      <div class="chip chip-magnet" id="chipMagnet" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v8a6 6 0 0 0 12 0V4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <span class="chip-label" data-i18n="magnetUp"></span><span class="chip-bar"><i></i></span>
+      </div>
+      <div class="chip chip-slow" id="chipSlow" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12L6 20h12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span class="chip-label" data-i18n="slowUp"></span><span class="chip-bar"><i></i></span>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <button type="button" id="btnDash" class="dash-btn">
+      <span class="dash-ring"></span>
+      <span class="dash-label" data-i18n="dash"></span>
+      <span class="dash-key" data-i18n="dashKey"></span>
+    </button>
+  </div>
+
+  <!-- Title -->
+  <section id="scrTitle" class="screen screen-title" aria-labelledby="logo">
+    <div class="topbar">
+      <button type="button" id="btnLang" class="pill" lang="fr"><span data-i18n="langToggle"></span></button>
+      <div class="topbar-spacer"></div>
+      <button type="button" id="btnMusic" class="icon-btn js-music" data-i18n-aria="music">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5l11-2v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="17.5" r="2.8" fill="currentColor"/><circle cx="17.5" cy="15" r="2.8" fill="currentColor"/><path class="slash" d="M3 3l18 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <button type="button" id="btnSound" class="icon-btn js-sound" data-i18n-aria="sound">
+        <svg class="ico-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        <svg class="ico-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="title-grid">
+      <div class="title-main">
+        <h1 id="logo" class="logo" aria-label="Rift Runner"><span class="logo-a">RIFT</span><span class="logo-b">RUNNER</span></h1>
+        <p class="tagline" data-i18n="tagline"></p>
+        <div class="pilot-card">
+          <div class="pilot-row">
+            <span class="lvl-badge" id="titleLvlBadge">1</span>
+            <div class="pilot-info">
+              <div class="pilot-name" id="titleLvl"></div>
+              <div class="bar"><i id="titleBar"></i></div>
+              <div class="pilot-meta"><span id="titleXp"></span><span id="titleBest"></span></div>
+            </div>
+            <div class="pilot-shards"><span class="shard-ico" aria-hidden="true"></span><span id="titleShards">0</span></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" id="btnPlay" class="btn btn-primary"><span data-i18n="play"></span></button>
+          <button type="button" id="btnHangar" class="btn"><span data-i18n="hangar"></span></button>
+        </div>
+        <p class="storage-note" id="storageNote" hidden data-i18n="storageOff"></p>
+      </div>
+      <aside class="howto" aria-labelledby="howTitle">
+        <h2 id="howTitle" data-i18n="howTitle"></h2>
+        <ul>
+          <li class="only-fine"><span class="k">&larr; &rarr;</span><span data-i18n="howSteerKeys"></span></li>
+          <li class="only-fine"><span class="k k-ico">&#x25CE;</span><span data-i18n="howSteerMouse"></span></li>
+          <li class="only-coarse"><span class="k k-ico">&#x21C6;</span><span data-i18n="howSteerTouch"></span></li>
+          <li class="only-fine"><span class="k">&#x2423;</span><span data-i18n="howDashKeys"></span></li>
+          <li class="only-coarse"><span class="k k-ico">&#x27A4;</span><span data-i18n="howDashTouch"></span></li>
+          <li><span class="k k-shard"><span class="shard-ico"></span></span><span data-i18n="howShards"></span></li>
+          <li><span class="k k-ico k-warn">!</span><span data-i18n="howHit"></span></li>
+          <li class="only-fine"><span class="k">P</span><span data-i18n="howPause"></span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Hangar -->
+  <section id="scrHangar" class="screen screen-hangar" hidden aria-labelledby="hangarTitle">
+    <div class="topbar">
+      <button type="button" id="btnHangarBack" class="btn btn-small"><span aria-hidden="true">&larr;</span> <span data-i18n="back"></span></button>
+      <h2 id="hangarTitle" class="screen-title-text" data-i18n="hangarTitle"></h2>
+      <div class="balance"><span class="lvl-badge small" id="hangarLvl">1</span><span class="shard-ico" aria-hidden="true"></span><span id="hangarShards">0</span></div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tabUpg" class="tab" aria-selected="true" aria-controls="panelUpg"><span data-i18n="tabUpgrades"></span></button>
+      <button type="button" role="tab" id="tabCraft" class="tab" aria-selected="false" aria-controls="panelCraft"><span data-i18n="tabCraft"></span></button>
+    </div>
+    <div class="hangar-body scroll">
+      <div id="panelUpg" role="tabpanel" aria-labelledby="tabUpg" class="upg-list"></div>
+      <div id="panelCraft" role="tabpanel" aria-labelledby="tabCraft" hidden>
+        <h3 class="sub-h" data-i18n="colorsTitle"></h3>
+        <div id="colorList" class="swatches"></div>
+        <h3 class="sub-h" data-i18n="trailsTitle"></h3>
+        <div id="trailList" class="swatches trails"></div>
+      </div>
+    </div>
+    <div class="hangar-foot">
+      <div id="hangarMsg" class="hangar-msg" role="status" aria-live="polite"></div>
+      <button type="button" id="btnHangarPlay" class="btn btn-primary"><span data-i18n="play"></span></button>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="scrResults" class="screen screen-results" hidden aria-labelledby="resTitle">
+    <div class="results scroll">
+      <h2 id="resTitle" class="res-title" data-i18n="runOver"></h2>
+      <div class="res-dist"><span id="resDist">0</span><small>m</small></div>
+      <div class="res-best" id="resBest"></div>
+      <div class="res-stats">
+        <div class="stat"><span class="stat-k" data-i18n="shardsCollected"></span><span class="stat-v"><span class="shard-ico" aria-hidden="true"></span><span id="resShards">0</span></span><span class="stat-x" id="resShardBonus"></span></div>
+        <div class="stat"><span class="stat-k" data-i18n="xpGained"></span><span class="stat-v" id="resXp">0</span></div>
+      </div>
+      <div class="pilot-card">
+        <div class="pilot-row">
+          <span class="lvl-badge" id="resLvlBadge">1</span>
+          <div class="pilot-info">
+            <div class="pilot-name" id="resLvl"></div>
+            <div class="bar"><i id="resBar"></i></div>
+            <div class="pilot-meta"><span id="resXpText"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="levelup" id="levelUp" hidden>
+        <div class="levelup-title" data-i18n="levelUp"></div>
+        <div class="levelup-sub" id="levelUpSub"></div>
+        <ul id="levelUpList"></ul>
+      </div>
+      <div class="actions">
+        <button type="button" id="btnAgain" class="btn btn-primary"><span data-i18n="runAgain"></span></button>
+        <button type="button" id="btnResHangar" class="btn"><span data-i18n="hangar"></span></button>
+        <button type="button" id="btnResMenu" class="btn btn-ghost"><span data-i18n="menu"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pause -->
+  <section id="scrPause" class="screen screen-pause" hidden aria-labelledby="pauseTitle">
+    <div class="pause-card">
+      <h2 id="pauseTitle" data-i18n="paused"></h2>
+      <button type="button" id="btnResume" class="btn btn-primary"><span data-i18n="resume"></span></button>
+      <div class="toggles">
+        <button type="button" id="btnPauseSound" class="btn btn-small js-sound-text"></button>
+        <button type="button" id="btnPauseMusic" class="btn btn-small js-music-text"></button>
+      </div>
+      <button type="button" id="btnQuit" class="btn btn-ghost"><span data-i18n="quit"></span></button>
+    </div>
+  </section>
+</div>
+<script src="js/physics.js"></script>
+<script src="js/progression.js"></script>
+<script src="js/strings.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/world.js"></script>
+<script src="js/render.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

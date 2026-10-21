@@ -83,21 +83,21 @@
   // ---- Cosmetics ----
   var COLORS = [
     { id: 'cyan', unlock: 1, hex: '#22E4FF' },
-    { id: 'magenta', unlock: 4, hex: '#FF2E88' },
-    { id: 'solar', unlock: 7, hex: '#FFB13B' },
-    { id: 'viper', unlock: 11, hex: '#7DFF6A' },
+    { id: 'magenta', unlock: 2, hex: '#FF2E88' },
+    { id: 'solar', unlock: 6, hex: '#FFB13B' },
+    { id: 'viper', unlock: 10, hex: '#7DFF6A' },
     { id: 'violet', unlock: 15, hex: '#A98BFF' },
-    { id: 'ice', unlock: 19, hex: '#E8F6FF' },
+    { id: 'ice', unlock: 20, hex: '#E8F6FF' },
     { id: 'ember', unlock: 23, hex: '#FF6A3D' },
     { id: 'prism', unlock: 28, hex: '#FFFFFF' }
   ];
   var TRAILS = [
     { id: 'ion', unlock: 1 },
-    { id: 'ribbon', unlock: 6 },
-    { id: 'sparks', unlock: 10 },
-    { id: 'pulse', unlock: 14 },
-    { id: 'comet', unlock: 21 },
-    { id: 'aurora', unlock: 26 }
+    { id: 'ribbon', unlock: 4 },
+    { id: 'sparks', unlock: 9 },
+    { id: 'pulse', unlock: 13 },
+    { id: 'comet', unlock: 18 },
+    { id: 'aurora', unlock: 25 }
   ];
 
   function levelReward(level) { return level <= 1 ? 0 : 15 * level; }   // bonus shards on reaching a level

@@ -97,6 +97,19 @@
     return widestGap(buf, n, 0);
   }
 
+  // Widest free stretch inside [a,b] given intervals already sorted by start (see maxFreeWidth).
+  function freeWithin(buf, n, a, b) {
+    var best = 0, cursor = a;
+    for (var i = 0; i < n; i++) {
+      var s0 = buf[i * 2], s1 = buf[i * 2 + 1];
+      if (s1 <= a || s0 >= b) continue;
+      if (s0 - cursor > best) best = s0 - cursor;
+      if (s1 > cursor) cursor = s1;
+    }
+    if (b - cursor > best) best = b - cursor;
+    return best > 0 ? best : 0;
+  }
+
   // Small, fast seeded PRNG (mulberry32). Created once per run.
   function rng(seed) {
     var a = seed >>> 0;
@@ -114,6 +127,6 @@
     clamp: clamp, lerp: lerp, approach: approach,
     speedAt: speedAt, difficulty: difficulty, rowInterval: rowInterval, gapWidth: gapWidth,
     sweptCircleBox: sweptCircleBox, sweptCircleCircle: sweptCircleCircle, segmentsHit: segmentsHit,
-    laserHits: laserHits, gapSegments: gapSegments, widestGap: widestGap, maxFreeWidth: maxFreeWidth, rng: rng
+    laserHits: laserHits, gapSegments: gapSegments, widestGap: widestGap, maxFreeWidth: maxFreeWidth, freeWithin: freeWithin, rng: rng
   };
 });

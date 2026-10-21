@@ -42,7 +42,7 @@
     W.shards = 0; W.alive = true; W.dying = false; W.deathT = 0; W.best = W.best || 0; W.passedBest = false;
     W.nextRowZ = 70; W.lastSafeX = 0; W.lastPattern = 0; W.repeat = 0; W.afterBar = false; W.rows = 0;
     W.nextPowerZ = 260 + W.rand() * 120; W.nextLaserT = 0; W.laserMinZ = 1700;
-    W.god = W.god || false; W.auto = W.auto || false; W.demoTarget = 0; W.demoT = 0;
+    W.god = W.god || false; W.auto = W.auto || false; W.gapLo = -1; W.gapHi = 1; W.nextHazZ = 0; W.deathCause = 0; W.demoTarget = 0; W.demoT = 0;
     W.input.axis = 0; W.input.dash = false; W.input.pointer = false; W.input.targetX = 0;
     for (var i = 0; i < W.ents.length; i++) W.ents[i].active = false;
     for (var j = 0; j < W.lasers.length; j++) W.lasers[j].active = false;
@@ -186,15 +186,17 @@
   }
 
   // ---- Lasers ----
-  function laserConflicts(W, lx, hw, other, windowT) {
-    var buf = W.scratch, sp = W.speed, i, j, k;
+  // A beam is only allowed if every hazard arriving while it fires leaves room on ONE side of it
+  // (the player can't cross a firing beam), and nothing arriving at all ends up fully blocked.
+  function laserConflicts(W, lx, hw, other, tele, fire) {
+    var buf = W.scratch, sp = W.speed, i, j, k, need = 2 * R + 0.16;
+    var leftOK = true, rightOK = true;
     for (i = 0; i < W.nOrder; i++) {
       var e = W.ents[W.order[i]];
       if (e.kind > K.MINE) continue;
       var arrive = (e.z - W.z) / sp;
-      if (arrive < -0.1 || arrive > windowT) continue;
+      if (arrive < -0.1 || arrive > tele + fire + 0.6) continue;
       if (e.kind === K.BAR) return true;
-      // gather every hazard near this one in z, plus the beam(s)
       var n = 0;
       for (j = 0; j < W.nOrder && n < 44; j++) {
         var f = W.ents[W.order[j]];
@@ -203,11 +205,29 @@
         if (f.kind === K.WALL) { for (k = 0; k < f.nseg; k++) { buf[n * 2] = f.segs[k * 2]; buf[n * 2 + 1] = f.segs[k * 2 + 1]; n++; } }
         else { var mr = f.baseR * 1.3; buf[n * 2] = f.x - mr; buf[n * 2 + 1] = f.x + mr; n++; }
       }
-      buf[n * 2] = lx - hw; buf[n * 2 + 1] = lx + hw; n++;
       if (other) { buf[n * 2] = other.x - other.hw; buf[n * 2 + 1] = other.x + other.hw; n++; }
-      if (Ph.maxFreeWidth(buf, n) < 2 * R + 0.12) return true;
+      Ph.maxFreeWidth(buf, n);   // sorts in place
+      if (arrive > tele - 0.25) {
+        if (Ph.freeWithin(buf, n, -1, lx - hw) < need) leftOK = false;
+        if (Ph.freeWithin(buf, n, lx + hw, 1) < need) rightOK = false;
+        if (!leftOK && !rightOK) return true;
+      }
+      // a mine field's guaranteed lane must stay mostly clear of the beam(s)
+      if (e.kind === K.MINE && laneBlocked(e.safeX, lx, hw, other)) return true;
     }
-    return false;
+    // inside the beam: either open side will do; otherwise the player's own side must stay open
+    if (Math.abs(W.x - lx) < hw + R) return !(leftOK || rightOK);
+    return W.x < lx ? !leftOK : !rightOK;
+  }
+
+  function laneBlocked(safe, lx, hw, other) {
+    var a = safe - 0.34, b = safe + 0.34;
+    var free = Math.max(0, (lx - hw) - a) > Math.max(0, b - (lx + hw)) ? Math.min(b, lx - hw) - a : b - Math.max(a, lx + hw);
+    if (other) {
+      // conservative: also require the lane to avoid the second beam
+      if (Math.abs(safe - other.x) < other.hw + 0.34 - (2 * R + 0.12)) return true;
+    }
+    return free < 2 * R + 0.14;
   }
 
   function startLaser(W, other) {
@@ -220,7 +240,7 @@
       var lx = (tries === 0 && !other && W.rand() < 0.6) ? W.x : -0.82 + W.rand() * 1.64;
       lx = clamp(lx, -0.85, 0.85);
       if (other && Math.abs(lx - other.x) < 0.65) continue;
-      if (!laserConflicts(W, lx, hw, other, tele + fire + 0.3)) {
+      if (!laserConflicts(W, lx, hw, other, tele, fire)) {
         L.active = true; L.x = lx; L.hw = hw; L.state = 0; L.t = 0; L.tele = tele; L.fire = fire; L.done = false; L.beeped = false;
         emit(W, EV.LASER_WARN, lx, 0);
         return L;
@@ -240,7 +260,7 @@
       emit(W, EV.SHIELD_BREAK, W.x, W.z);
       return;
     }
-    W.alive = false; W.dying = true; W.deathT = 0;
+    W.alive = false; W.dying = true; W.deathT = 0; W.deathCause = e ? e.kind : 0;
     emit(W, EV.CRASH, W.x, W.z);
   }
 
@@ -253,16 +273,56 @@
     emit(W, EV.POWER, e.kind, e.z);
   }
 
-  // Next hazard's safe line (for the demo/attract craft and the test autopilot).
+  // Next hazard's safe line, moved the least distance needed to clear every laser column
+  // (used by the attract-mode craft and the test autopilot).
+  var lzA = new Float32Array(MAX_LASER), lzB = new Float32Array(MAX_LASER);
   function nextSafeX(W) {
+    var x = nextSafeRaw(W), lo = W.gapLo + R + 0.01, hi = W.gapHi - R - 0.01, n = 0, i, j;
+    var tNext = (W.nextHazZ - W.z) / W.speed;
+    for (i = 0; i < W.lasers.length; i++) {
+      var L = W.lasers[i];
+      if (!L.active) continue;
+      if (L.state === 0 && tNext < L.tele - L.t - 0.05) continue;   // clear the next hazard first
+      var m = L.hw + R + 0.02;
+      lzA[n] = L.x - m; lzB[n] = L.x + m; n++;
+    }
+    if (n === 0) return clamp(x, -Ph.CRAFT_XMAX, Ph.CRAFT_XMAX);
+    if (lo > hi) { lo = -Ph.CRAFT_XMAX; hi = Ph.CRAFT_XMAX; }
+    // candidate points: x itself and every laser edge; keep the closest one that is clear
+    var best = x, bestD = 1e9;
+    for (j = -1; j < n * 2; j++) {
+      var c = j < 0 ? x : (j & 1 ? lzB[j >> 1] + 0.01 : lzA[j >> 1] - 0.01);
+      c = clamp(c, Math.max(lo, -Ph.CRAFT_XMAX), Math.min(hi, Ph.CRAFT_XMAX));
+      var ok = true;
+      for (i = 0; i < n; i++) if (c > lzA[i] && c < lzB[i]) { ok = false; break; }
+      if (ok && Math.abs(c - x) < bestD) { bestD = Math.abs(c - x); best = c; }
+    }
+    // never cross a beam that is firing (or about to): hold on the current side
+    for (i = 0; i < W.lasers.length; i++) {
+      var B = W.lasers[i];
+      if (!B.active || (B.state === 0 && B.t < B.tele - 0.35)) continue;
+      if ((W.x < B.x) !== (best < B.x)) best = W.x < B.x ? B.x - B.hw - R - 0.07 : B.x + B.hw + R + 0.07;
+    }
+    return clamp(best, -Ph.CRAFT_XMAX, Ph.CRAFT_XMAX);
+  }
+  function nextSafeRaw(W) {
+    W.gapLo = -1; W.gapHi = 1; W.nextHazZ = W.z + 1e4;
     for (var i = 0; i < W.nOrder; i++) {
       var e = W.ents[W.order[i]];
       if (e.kind <= K.MINE && e.z + e.depth > W.z - 0.5 && !e.hit) {
+        W.nextHazZ = e.z;
+        if (e.kind === K.WALL) {
+          // bounds of the gap that holds the safe line
+          for (var s = 0; s < e.nseg; s++) {
+            if (e.segs[s * 2 + 1] <= e.safeX + 1e-4 && e.segs[s * 2 + 1] > W.gapLo) W.gapLo = e.segs[s * 2 + 1];
+            if (e.segs[s * 2] >= e.safeX - 1e-4 && e.segs[s * 2] < W.gapHi) W.gapHi = e.segs[s * 2];
+          }
+        }
         if (e.kind === K.BAR) {
           // aim for the side the bar will not be on when it arrives
           var tArr = W.time + (e.z - W.z) / W.speed;
           var off = e.amp * Math.sin(e.omega * tArr + e.phase);
-          if (e.mirror) return Math.abs(off) > 0.15 ? 0 : 0.8;
+          if (e.mirror) return off > 0.05 ? (W.x >= 0 ? 0.8 : -0.8) : 0;
           return off > 0 ? -0.75 : 0.75;
         }
         return e.safeX;
