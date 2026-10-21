@@ -39,10 +39,9 @@
             <span class="mode-meta" id="classic-meta"></span>
           </button>
           <button type="button" class="mode-btn daily" id="btn-daily">
-            <span class="mode-chip" id="daily-date"></span>
             <span class="mode-name" data-i18n="daily"></span>
             <span class="mode-desc" data-i18n="dailyDesc"></span>
-            <span class="mode-meta" id="daily-meta"></span>
+            <span class="mode-meta"><span class="mode-chip" id="daily-date"></span><span id="daily-meta"></span></span>
           </button>
         </div>
       </div>
@@ -50,11 +49,11 @@
       <aside class="howto" aria-labelledby="howto-h">
         <h2 id="howto-h" data-i18n="howTo"></h2>
         <ol>
-          <li data-i18n="how1"></li>
-          <li data-i18n="how2"></li>
-          <li class="rule-combo" data-i18n="how3"></li>
-          <li data-i18n="how4"></li>
-          <li data-i18n="how5"></li>
+          <li data-i18n-html="how1"></li>
+          <li data-i18n-html="how2"></li>
+          <li class="rule-combo" data-i18n-html="how3"></li>
+          <li data-i18n-html="how4"></li>
+          <li data-i18n-html="how5"></li>
         </ol>
         <p class="keys" data-i18n="keys"></p>
       </aside>
@@ -72,7 +71,7 @@
           </button>
           <div class="brand">
             <span class="brand-logo"><span class="l-neon">NEON</span> <span class="l-merge">MERGE</span></span>
-            <span class="mode-tag"><span class="tag-full" id="mode-tag-full"></span><span class="tag-short" id="mode-tag-short"></span></span>
+            <span class="mode-tag" id="mode-tag"></span>
           </div>
           <div class="tools">
             <button type="button" class="icon-btn lang-btn" data-action="lang"><span class="lc-fr">FR</span><span class="lc-en">EN</span></button>
@@ -109,6 +108,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
             <span data-i18n="undo"></span>
             <span class="badge" id="undo-count">1</span>
+            <span class="pips" id="undo-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           </button>
           <button type="button" class="btn" id="btn-new">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
@@ -120,7 +120,7 @@
       </div>
 
       <div class="board-wrap" id="board-wrap">
-        <div class="board" id="board" data-i18n-label="board" role="group">
+        <div class="board" id="board" data-i18n-label="board" role="group" tabindex="0">
           <div class="cells" aria-hidden="true">
             <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
             <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
