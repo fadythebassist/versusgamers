@@ -13,10 +13,11 @@ const s = t(lang);
 const c = CATEGORIES.find((x) => x.key === cat)!;
 const list = gamesIn(cat);
 const name = c.name[lang];
-const title = lang === 'fr' ? `Jeux de ${name.toLowerCase()} en ligne — ${s.siteName}` : `${name} games online — ${s.siteName}`;
+const FR_OF: Record<string, string> = { puzzle: 'de casse-tête', action: 'd’action', arcade: 'd’arcade', racing: 'de course', strategy: 'de stratégie et de simulation', sports: 'de sport', cards: 'de cartes et de société', word: 'de mots et de quiz' };
+const title = lang === 'fr' ? `Jeux ${FR_OF[cat]} en ligne — ${s.siteName}` : `${name} games online — ${s.siteName}`;
 const intro = {
   en: `${list.length} ${name.toLowerCase()} games you can play right in your browser, on phone or computer. Every game has its own page with how-to-play tips in English and French.`,
-  fr: `${list.length} jeux de ${name.toLowerCase()} à jouer directement dans votre navigateur, sur téléphone ou ordinateur. Chaque jeu a sa page avec les règles et les commandes, en français et en anglais.`,
+  fr: `${list.length} jeux ${FR_OF[cat]} à jouer directement dans votre navigateur, sur téléphone ou ordinateur. Chaque jeu a sa page avec les règles et les commandes, en français et en anglais.`,
 }[lang];
 const jsonLd = {
   '@context': 'https://schema.org',

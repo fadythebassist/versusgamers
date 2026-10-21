@@ -13,18 +13,18 @@ const title = kind === 'about'
   : (lang === 'fr' ? 'Nous joindre — Versus Gamers' : 'Contact us — Versus Gamers');
 const desc = kind === 'about'
   ? (lang === 'fr' ? 'Qui est derrière Versus Gamers et comment nous choisissons nos jeux.' : 'Who runs Versus Gamers and how we choose our games.')
-  : (lang === 'fr' ? 'Écris à Versus Gamers.' : 'Get in touch with Versus Gamers.');
+  : (lang === 'fr' ? 'Écrivez à Versus Gamers.' : 'Get in touch with Versus Gamers.');
 ---
 <Base lang={lang} title={title} description={desc} altPath={path.page(other(lang), kind)}>
   <div class="container">
     <header class="page-head">
-      <h1 class="page-title">{kind === 'about' ? (lang === 'fr' ? 'À propos' : 'About') : 'Contact'}</h1>
+      <h1 class="page-title">{kind === 'about' ? (lang === 'fr' ? 'À propos' : 'About') : (lang === 'fr' ? 'Nous joindre' : 'Contact')}</h1>
     </header>
     {kind === 'about' && lang === 'en' && (
       <article class="legal">
         <p>Versus Gamers is a browser games site made in {SITE.location.en}, in English and French. You can play {n} hand-picked games and {ORIGINALS.length} games of our own on a phone or a computer, with nothing to install and no account.</p>
         <h2>How we choose games</h2>
-        <p>Most games come from our partner Playgama. We start from their catalog and keep games that run on phones and computers, then leave out games aimed at young children, knock-offs of famous brands, casino games, horror and crime games. Each game has its own page with a description and how-to-play tips we write ourselves, in both languages.</p>
+        <p>Most games come from our partner Playgama. We start from their catalog and keep games that run on phones and computers, then leave out games aimed at young children, obvious knock-offs of famous brands, casino games, horror and crime games. Each game has its own page with a description and how-to-play tips we write ourselves, in both languages.</p>
         <h2>Our originals</h2>
         <p>Lexi Duel, Neon Merge and Rift Runner are made by Versus Gamers. They work in English and French, show no ads and save your progress on your device.</p>
         <h2>Make it yours</h2>
@@ -36,11 +36,11 @@ const desc = kind === 'about'
       <article class="legal">
         <p>Versus Gamers est un site de jeux en ligne créé à {SITE.location.fr}, en français et en anglais. Vous pouvez jouer à {n} jeux choisis avec soin et à {ORIGINALS.length} jeux de notre cru sur téléphone ou ordinateur, sans rien installer et sans compte.</p>
         <h2>Comment nous choisissons les jeux</h2>
-        <p>La plupart des jeux viennent de notre partenaire Playgama. Nous partons de son catalogue et gardons les jeux qui fonctionnent sur téléphone et ordinateur, puis nous écartons les jeux destinés aux jeunes enfants, les imitations de marques connues, les jeux de casino, d’horreur et de crime. Chaque jeu a sa page avec une description et des conseils que nous rédigeons nous-mêmes, dans les deux langues.</p>
+        <p>La plupart des jeux viennent de notre partenaire Playgama. Nous partons de son catalogue et gardons les jeux qui fonctionnent sur téléphone et ordinateur, puis nous écartons les jeux destinés aux jeunes enfants, les imitations flagrantes de marques connues, les jeux de casino, d’horreur et de crime. Chaque jeu a sa page avec une description et des conseils que nous rédigeons nous-mêmes, dans les deux langues.</p>
         <h2>Nos originaux</h2>
         <p>Lexi Duel, Neon Merge et Rift Runner sont créés par Versus Gamers. Ils fonctionnent en français et en anglais, n’affichent aucune publicité et enregistrent votre progression sur votre appareil.</p>
         <h2>À votre goût</h2>
-        <p>Choisissez un des huit thèmes avec le bouton palette en haut de chaque page. Votre choix est gardé sur votre appareil.</p>
+        <p>Choisissez l’un des huit thèmes avec le bouton palette en haut de chaque page. Votre choix est mémorisé sur votre appareil.</p>
         <p><a href={path.page(lang, 'contact')}>Nous écrire</a></p>
       </article>
     )}

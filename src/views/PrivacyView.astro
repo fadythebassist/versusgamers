@@ -7,7 +7,7 @@ const { lang } = Astro.props;
 const updated = { en: 'October 20, 2026', fr: '20 octobre 2026' }[lang];
 const email = SITE.contactEmail;
 ---
-<Base lang={lang} title={lang === 'fr' ? 'Politique de confidentialité — Versus Gamers' : 'Privacy policy — Versus Gamers'} description={lang === 'fr' ? 'Comment Versus Gamers traite les renseignements personnels, conformément à la Loi 25 du Québec.' : 'How Versus Gamers handles personal information, in line with Quebec’s Law 25.'} altPath={path.page(other(lang), 'privacy')}>
+<Base lang={lang} title={lang === 'fr' ? 'Politique de confidentialité — Versus Gamers' : 'Privacy policy — Versus Gamers'} description={lang === 'fr' ? 'Comment Versus Gamers traite les renseignements personnels, en application de la Loi 25 du Québec.' : 'How Versus Gamers handles personal information, in line with Quebec’s Law 25.'} altPath={path.page(other(lang), 'privacy')}>
   <div class="container">
     <header class="page-head">
       <h1 class="page-title">{lang === 'fr' ? 'Confidentialité' : 'Privacy'}</h1>
@@ -16,17 +16,17 @@ const email = SITE.contactEmail;
 
     {lang === 'en' ? (
       <article class="legal">
-        <p>Versus Gamers (versusgamers.com) is a free browser games website run from {SITE.location.en}. This policy explains what personal information is handled when you use the site, why, and the choices you have. It is written to meet Quebec’s <em>Act respecting the protection of personal information in the private sector</em> (as amended by Law 25) and Canada’s federal privacy law.</p>
+        <p>Versus Gamers (versusgamers.com) is a free browser games website run from {SITE.location.en}. This policy explains what personal information is handled when you use the site, why, and the choices you have. It is written with Quebec’s <em>Act respecting the protection of personal information in the private sector</em> (as amended by Law 25) and Canada’s federal privacy law in mind.</p>
 
         <h2>Person in charge of personal information</h2>
-        <p>The person in charge of the protection of personal information is {SITE.owner}, the site’s owner. You can reach him at <a href={`mailto:${email}`}>{email}</a> for any question, request or complaint about your personal information.</p>
+        <p>Versus Gamers is operated by its owner, an individual based in Pointe-Claire, Quebec, who is also the person in charge of the protection of personal information. You can reach the person in charge at <a href={`mailto:${email}`}>{email}</a> for any question, request or complaint about your personal information.</p>
 
         <h2>The short version</h2>
         <ul>
           <li>There are no accounts. We never ask for your name, email or age to play.</li>
-          <li>Your favorites, recently played games, skin choice and progress in our own games are saved only in your browser, on your device.</li>
+          <li>Your favorites, recently played games, skin and language choices, privacy choice and progress in our own games are saved only in your browser, on your device.</li>
           <li>Our site statistics use Cloudflare Web Analytics, which sets no cookies.</li>
-          <li>Games from our partner Playgama show ads that may use cookies. They only load after you agree.</li>
+          <li>Games from our partner Playgama show ads that may use cookies. They only load after you agree. Game cover images come from Playgama’s image server.</li>
         </ul>
 
         <h2>What we handle, and why</h2>
@@ -34,47 +34,47 @@ const email = SITE.contactEmail;
           <table>
             <thead><tr><th>Information</th><th>Why</th><th>Where it is kept, and for how long</th></tr></thead>
             <tbody>
-              <tr><td>Your favorites, recently played list, skin choice, privacy choice, and saved progress and scores in Versus Gamers originals</td><td>To remember your settings and progress</td><td>Only in your browser’s storage on your device. We cannot see it. It stays until you clear your browser data for versusgamers.com.</td></tr>
-              <tr><td>Anonymous visit statistics: pages viewed, referring site, country, browser and device type</td><td>To understand which pages and games people use</td><td>Cloudflare Web Analytics, which does not use cookies or fingerprinting and gives us totals only. We cannot identify individual visitors.</td></tr>
+              <tr><td>Your favorites, recently played list, skin choice, language choice, privacy choice, and saved progress and scores in Versus Gamers originals</td><td>To remember your settings and progress</td><td>Only in your browser’s storage on your device. We cannot see it. It stays until you clear your browser data for versusgamers.com.</td></tr>
+              <tr><td>Aggregate visit statistics: pages viewed, referring site, country, browser and device type</td><td>To understand which pages and games people use</td><td>Cloudflare Web Analytics, which does not use cookies or fingerprinting and gives us totals only. We cannot identify individual visitors.</td></tr>
               <tr><td>Technical data your browser sends to load any website, such as your IP address</td><td>To deliver the site and protect it from attacks</td><td>Processed by our host, Cloudflare, under its privacy policy. We do not keep server logs ourselves.</td></tr>
-              <tr><td>Emails you send us</td><td>To answer you</td><td>In our mailbox, deleted within 12 months after the conversation ends unless we need them longer to meet a legal obligation.</td></tr>
+              <tr><td>Emails you send us</td><td>To answer you</td><td>Our contact address forwards messages, through Cloudflare Email Routing, to the owner’s Gmail mailbox (Google). We delete them within 12 months after the conversation ends unless we need them longer to meet a legal obligation.</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2>Games from Playgama, cookies and ads</h2>
-        <p>Most games on the site are provided by Playgama (operated by LeadToChanges L.L.C-FZ, Dubai, United Arab Emirates) and run inside a frame from playgama.com. When you start one of these games, Playgama and its advertising partners can set cookies and collect information such as your device type, IP address and in-game activity to run the game, show ads and measure them. That processing is governed by <a href="https://playgama.com/confidential" rel="noopener" target="_blank">Playgama’s privacy policy</a>.</p>
-        <p>A Playgama game never loads until you agree, either through the banner shown on your first visit or with the “Accept and play” button on a game. If you choose “Not now”, nothing from Playgama loads, and you can still use the rest of the site and our own games. You can change your choice at any time with “Privacy choices” at the bottom of every page. To remove cookies already set by Playgama, clear your browser’s cookies.</p>
+        <p>Most games on the site are provided by Playgama (operated by LeadToChanges L.L.C-FZ, Dubai, United Arab Emirates) and run inside a frame from playgama.com. When you start one of these games, Playgama and its advertising partners can set cookies and collect information such as your device type, IP address and in-game activity to run the game, show ads (which may be based on your interests) and measure them. That processing is governed by <a href="https://playgama.com/confidential" rel="noopener" target="_blank">Playgama’s privacy policy</a>.</p>
+        <p>A Playgama game never loads until you agree, either through the banner shown on your first visit or with the “Accept and play” button on a game. If you choose “Not now”, no Playgama game or ad loads, and you can still use the rest of the site and our own games. Game cover images are still loaded from Playgama’s image server (static.playgama.com) on every visit, which, like any web server, receives your IP address and browser details. You can change your choice at any time with “Privacy choices” at the bottom of every page. To remove cookies already set by Playgama, clear your browser’s cookies.</p>
         <p>Our own games (Lexi Duel, Neon Merge and Rift Runner) show no ads and use no cookies.</p>
 
         <h2>Information sent outside Quebec</h2>
-        <p>Our host, Cloudflare, operates servers in many countries, including the United States, and Playgama is based in the United Arab Emirates. Before relying on these providers we considered the sensitivity of the information, why it is used and the protection it receives under their policies. The information involved is limited to technical and usage data.</p>
+        <p>Our host, Cloudflare, operates servers in many countries, including the United States, Playgama, which also serves the game images, is based in the United Arab Emirates, and Google stores the emails you send us in several countries. Before relying on these providers we considered the sensitivity of the information, why it is used and the protection it receives under their policies. The information involved is limited to technical and usage data and to the emails you send us.</p>
 
         <h2>Children</h2>
-        <p>Versus Gamers is designed for teens and adults. It is not directed to children under 13, and we do not knowingly collect personal information from them. There are no accounts, chats or profiles on the site.</p>
+        <p>Versus Gamers is designed for teens and adults. It is not directed to children under 14, and we do not knowingly collect personal information from them. Under Quebec law, a person under 14 cannot consent alone to the collection of their personal information, so if you are under 14, ask a parent or guardian before choosing “Allow” or “Accept and play”. Versus Gamers itself has no accounts, chats or profiles. Some Playgama games include their own online matches, nicknames, leaderboards or chat, which are run by their developers under Playgama’s policies.</p>
 
         <h2>Advertising on our own pages</h2>
         <p>Our own pages show no ads today. If we add ads, for example from Google AdSense, we will update this policy first and ask for your consent before any advertising cookies are used.</p>
 
         <h2>Your rights</h2>
-        <p>You can ask to access the personal information we hold about you, have it corrected or deleted, withdraw your consent, or ask how it was used. Write to <a href={`mailto:${email}`}>{email}</a>; we will answer within 30 days. Since we do not keep accounts or identify visitors, most of the information described above is not linked to you and cannot be retrieved by us. If you are not satisfied with our answer, you can file a complaint with the <a href="https://www.cai.gouv.qc.ca/" rel="noopener" target="_blank">Commission d’accès à l’information du Québec</a>.</p>
+        <p>You can ask to access the personal information we hold about you, have it corrected or deleted, withdraw your consent, ask how it was used, receive it in a commonly used technological format, or ask that a link to it be de-indexed. Write to <a href={`mailto:${email}`}>{email}</a>; we will answer within 30 days. Since we do not keep accounts or identify visitors, most of the information described above is not linked to you and cannot be retrieved by us. If you are not satisfied with our answer, you can file a complaint with the <a href="https://www.cai.gouv.qc.ca/" rel="noopener" target="_blank">Commission d’accès à l’information du Québec</a>.</p>
 
         <h2>Changes</h2>
         <p>We will post any change to this policy on this page and update the date at the top. Significant changes will be announced on the site.</p>
       </article>
     ) : (
       <article class="legal">
-        <p>Versus Gamers (versusgamers.com) est un site de jeux gratuits exploité depuis {SITE.location.fr}. Cette politique explique quels renseignements personnels sont traités quand vous utilisez le site, pourquoi, et quels choix vous avez. Elle vise à respecter la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> du Québec (modifiée par la Loi 25) et la loi fédérale canadienne.</p>
+        <p>Versus Gamers (versusgamers.com) est un site de jeux gratuits exploité depuis {SITE.location.fr}. Cette politique explique quels renseignements personnels sont traités quand vous utilisez le site, pourquoi, et quels choix vous avez. Elle a été rédigée en fonction de la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> du Québec (modifiée par la Loi 25) et la loi fédérale canadienne.</p>
 
         <h2>Responsable de la protection des renseignements personnels</h2>
-        <p>Le responsable de la protection des renseignements personnels est {SITE.owner}, propriétaire du site. Vous pouvez le joindre à <a href={`mailto:${email}`}>{email}</a> pour toute question, demande ou plainte concernant vos renseignements personnels.</p>
+        <p>Versus Gamers est exploité par son propriétaire, un particulier établi à Pointe-Claire (Québec), qui est aussi le responsable de la protection des renseignements personnels. Vous pouvez joindre le responsable à <a href={`mailto:${email}`}>{email}</a> pour toute question, demande ou plainte concernant vos renseignements personnels.</p>
 
         <h2>En bref</h2>
         <ul>
           <li>Il n’y a pas de compte. Nous ne demandons jamais votre nom, votre courriel ou votre âge pour jouer.</li>
-          <li>Vos favoris, vos jeux récents, votre thème et votre progression dans nos propres jeux sont enregistrés seulement dans votre navigateur, sur votre appareil.</li>
+          <li>Vos favoris, vos jeux récents, votre thème, votre langue, votre choix de confidentialité et votre progression dans nos propres jeux sont enregistrés seulement dans votre navigateur, sur votre appareil.</li>
           <li>Nos statistiques de visite utilisent Cloudflare Web Analytics, qui ne dépose aucun témoin (cookie).</li>
-          <li>Les jeux de notre partenaire Playgama affichent des publicités qui peuvent utiliser des témoins. Ils se chargent seulement après votre accord.</li>
+          <li>Les jeux de notre partenaire Playgama affichent des publicités qui peuvent utiliser des témoins. Ils se chargent seulement après votre accord. Les images des jeux proviennent du serveur d’images de Playgama.</li>
         </ul>
 
         <h2>Ce que nous traitons, et pourquoi</h2>
@@ -82,30 +82,30 @@ const email = SITE.contactEmail;
           <table>
             <thead><tr><th>Renseignement</th><th>Pourquoi</th><th>Où il est conservé, et combien de temps</th></tr></thead>
             <tbody>
-              <tr><td>Vos favoris, votre liste de jeux récents, votre thème, votre choix de confidentialité, ainsi que votre progression et vos scores dans les jeux originaux Versus Gamers</td><td>Pour garder vos réglages et votre progression</td><td>Seulement dans le stockage de votre navigateur, sur votre appareil. Nous n’y avons pas accès. Ils restent jusqu’à ce que vous effaciez les données de navigation de versusgamers.com.</td></tr>
-              <tr><td>Statistiques de visite anonymes : pages vues, site de provenance, pays, type de navigateur et d’appareil</td><td>Pour savoir quelles pages et quels jeux sont utilisés</td><td>Cloudflare Web Analytics, qui n’utilise ni témoins ni empreinte numérique et ne nous donne que des totaux. Nous ne pouvons pas identifier un visiteur.</td></tr>
+              <tr><td>Vos favoris, votre liste de jeux récents, votre thème, votre choix de langue, votre choix de confidentialité, ainsi que votre progression et vos scores dans les jeux originaux Versus Gamers</td><td>Pour garder vos réglages et votre progression</td><td>Seulement dans le stockage de votre navigateur, sur votre appareil. Nous n’y avons pas accès. Ils restent jusqu’à ce que vous effaciez les données de navigation de versusgamers.com.</td></tr>
+              <tr><td>Statistiques de visite agrégées : pages vues, site de provenance, pays, type de navigateur et d’appareil</td><td>Pour savoir quelles pages et quels jeux sont utilisés</td><td>Cloudflare Web Analytics, qui n’utilise ni témoins ni empreinte numérique et ne nous donne que des totaux. Nous ne pouvons pas identifier un visiteur.</td></tr>
               <tr><td>Données techniques que votre navigateur envoie pour charger n’importe quel site, comme votre adresse IP</td><td>Pour afficher le site et le protéger contre les attaques</td><td>Traitées par notre hébergeur, Cloudflare, selon sa politique de confidentialité. Nous ne conservons pas nous-mêmes de journaux de serveur.</td></tr>
-              <tr><td>Les courriels que vous nous envoyez</td><td>Pour vous répondre</td><td>Dans notre boîte de courriel, supprimés dans les 12 mois suivant la fin de l’échange, sauf si une obligation légale exige de les garder plus longtemps.</td></tr>
+              <tr><td>Les courriels que vous nous envoyez</td><td>Pour vous répondre</td><td>Notre adresse de contact transfère les messages, par Cloudflare Email Routing, vers la boîte Gmail (Google) du propriétaire. Nous les supprimons dans les 12 mois suivant la fin de l’échange, sauf si une obligation légale exige de les garder plus longtemps.</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2>Jeux de Playgama, témoins et publicités</h2>
-        <p>La plupart des jeux du site sont fournis par Playgama (exploité par LeadToChanges L.L.C-FZ, Dubaï, Émirats arabes unis) et s’affichent dans un cadre provenant de playgama.com. Quand vous lancez un de ces jeux, Playgama et ses partenaires publicitaires peuvent déposer des témoins et recueillir des renseignements comme votre type d’appareil, votre adresse IP et votre activité dans le jeu pour faire fonctionner le jeu, afficher des publicités et les mesurer. Ce traitement est régi par la <a href="https://playgama.com/fr/confidentiel" rel="noopener" target="_blank">politique de confidentialité de Playgama</a>.</p>
-        <p>Un jeu Playgama ne se charge jamais avant votre accord, donné dans la bannière affichée à votre première visite ou avec le bouton « Accepter et jouer » sur un jeu. Si vous choisissez « Pas maintenant », rien de Playgama ne se charge, et vous pouvez quand même utiliser le reste du site et nos propres jeux. Vous pouvez changer votre choix en tout temps avec « Choix de confidentialité » au bas de chaque page. Pour supprimer les témoins déjà déposés par Playgama, effacez les témoins de votre navigateur.</p>
+        <p>La plupart des jeux du site sont fournis par Playgama (exploité par LeadToChanges L.L.C-FZ, Dubaï, Émirats arabes unis) et s’affichent dans un cadre provenant de playgama.com. Quand vous lancez un de ces jeux, Playgama et ses partenaires publicitaires peuvent déposer des témoins et recueillir des renseignements comme votre type d’appareil, votre adresse IP et votre activité dans le jeu pour faire fonctionner le jeu, afficher des publicités (qui peuvent être fondées sur vos intérêts) et les mesurer. Ce traitement est régi par la <a href="https://playgama.com/fr/confidentiel" rel="noopener" target="_blank">politique de confidentialité de Playgama</a>.</p>
+        <p>Un jeu Playgama ne se charge jamais avant votre accord, donné dans la bannière affichée à votre première visite ou avec le bouton « Accepter et jouer » sur un jeu. Si vous choisissez « Pas maintenant », aucun jeu ni aucune publicité de Playgama ne se charge, et vous pouvez quand même utiliser le reste du site et nos propres jeux. Les images des jeux proviennent toutefois du serveur d’images de Playgama (static.playgama.com) à chaque visite, qui reçoit, comme tout serveur Web, votre adresse IP et des renseignements sur votre navigateur. Vous pouvez changer votre choix en tout temps avec « Choix de confidentialité » au bas de chaque page. Pour supprimer les témoins déjà déposés par Playgama, effacez les témoins de votre navigateur.</p>
         <p>Nos propres jeux (Lexi Duel, Neon Merge et Rift Runner) n’affichent aucune publicité et n’utilisent aucun témoin.</p>
 
         <h2>Communication de renseignements à l’extérieur du Québec</h2>
-        <p>Notre hébergeur, Cloudflare, exploite des serveurs dans plusieurs pays, dont les États-Unis, et Playgama est établi aux Émirats arabes unis. Avant de faire appel à ces fournisseurs, nous avons tenu compte de la sensibilité des renseignements, de leur finalité et de la protection qu’ils reçoivent selon leurs politiques. Les renseignements visés se limitent à des données techniques et d’utilisation.</p>
+        <p>Notre hébergeur, Cloudflare, exploite des serveurs dans plusieurs pays, dont les États-Unis, Playgama, qui fournit aussi les images des jeux, est établi aux Émirats arabes unis, et Google conserve dans plusieurs pays les courriels que vous nous envoyez. Avant de faire appel à ces fournisseurs, nous avons tenu compte de la sensibilité des renseignements, de leur finalité et de la protection qu’ils reçoivent selon leurs politiques. Les renseignements visés se limitent à des données techniques et d’utilisation, ainsi qu’aux courriels que vous nous envoyez.</p>
 
         <h2>Enfants</h2>
-        <p>Versus Gamers s’adresse aux adolescents et aux adultes. Le site ne vise pas les enfants de moins de 13 ans, et nous ne recueillons pas sciemment de renseignements personnels auprès d’eux. Il n’y a ni compte, ni clavardage, ni profil sur le site.</p>
+        <p>Versus Gamers s’adresse aux adolescents et aux adultes. Le site ne vise pas les enfants de moins de 14 ans, et nous ne recueillons pas sciemment de renseignements personnels auprès d’eux. Au Québec, une personne de moins de 14 ans ne peut pas consentir seule à la collecte de ses renseignements personnels : si vous avez moins de 14 ans, demandez à un parent ou à un tuteur avant de choisir « Autoriser » ou « Accepter et jouer ». Versus Gamers n’a ni compte, ni clavardage, ni profil. Certains jeux Playgama offrent leurs propres parties en ligne, pseudonymes, classements ou clavardage, gérés par leurs développeurs selon les politiques de Playgama.</p>
 
         <h2>Publicité sur nos propres pages</h2>
         <p>Nos propres pages n’affichent aucune publicité pour l’instant. Si nous en ajoutons, par exemple de Google AdSense, nous mettrons d’abord cette politique à jour et vous demanderons votre consentement avant d’utiliser des témoins publicitaires.</p>
 
         <h2>Vos droits</h2>
-        <p>Vous pouvez demander à consulter les renseignements personnels que nous détenons à votre sujet, les faire corriger ou supprimer, retirer votre consentement ou savoir comment ils ont été utilisés. Écrivez à <a href={`mailto:${email}`}>{email}</a>; nous répondrons dans un délai de 30 jours. Comme nous n’avons pas de comptes et n’identifions pas les visiteurs, la plupart des renseignements décrits plus haut ne sont pas liés à vous et nous ne pouvons pas les retrouver. Si notre réponse ne vous satisfait pas, vous pouvez porter plainte auprès de la <a href="https://www.cai.gouv.qc.ca/" rel="noopener" target="_blank">Commission d’accès à l’information du Québec</a>.</p>
+        <p>Vous pouvez demander à consulter les renseignements personnels que nous détenons à votre sujet, les faire corriger ou supprimer, retirer votre consentement, savoir comment ils ont été utilisés, les recevoir dans un format technologique structuré et couramment utilisé, ou demander la désindexation d’un hyperlien qui y mène. Écrivez à <a href={`mailto:${email}`}>{email}</a>; nous répondrons dans un délai de 30 jours. Comme nous n’avons pas de comptes et n’identifions pas les visiteurs, la plupart des renseignements décrits plus haut ne sont pas liés à vous et nous ne pouvons pas les retrouver. Si notre réponse ne vous satisfait pas, vous pouvez porter plainte auprès de la <a href="https://www.cai.gouv.qc.ca/" rel="noopener" target="_blank">Commission d’accès à l’information du Québec</a>.</p>
 
         <h2>Modifications</h2>
         <p>Toute modification de cette politique sera publiée sur cette page avec une nouvelle date en haut. Les changements importants seront annoncés sur le site.</p>

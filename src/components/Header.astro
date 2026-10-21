@@ -28,7 +28,7 @@ const names = Object.fromEntries(skinsMeta.map((m) => [m.id, m.name[lang]]));
       <div class="skin-picker" data-skin-names={JSON.stringify(names)}>
         <button type="button" class="skin-btn" aria-haspopup="true" aria-expanded="false" aria-controls="skin-menu" aria-label={s.changeSkin}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.8 1.5-1.6 0-.9-.6-1.4-.6-2.3 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4c0-4.7-4-8.5-9-8.5z"></path><circle cx="7.5" cy="11" r="1"></circle><circle cx="10.5" cy="7" r="1"></circle><circle cx="15" cy="7.5" r="1"></circle></svg>
-          <span class="label">{s.skin}: <span data-skin-name>{def.name[lang]}</span></span>
+          <span class="label">{s.skin}{lang === 'fr' ? ' :' : ':'} <span data-skin-name>{def.name[lang]}</span></span>
           <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
         </button>
         <div class="skin-menu" id="skin-menu" role="menu" aria-label={s.chooseSkin} hidden>
