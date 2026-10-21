@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#06060C">
+<meta name="description" content="Neon Merge: slide glowing energy cells, fuse equal values, chain combos and chase 2048. A Versus Gamers original.">
+<title>Neon Merge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-photo" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<main id="app">
+
+  <!-- ===================== Title screen ===================== -->
+  <section id="screen-title" class="screen active" aria-labelledby="logo">
+    <div class="title-tools">
+      <button type="button" class="icon-btn lang-btn" data-action="lang"><span class="lc-fr">FR</span><span class="lc-en">EN</span></button>
+      <button type="button" class="icon-btn sound-btn" data-action="sound">
+        <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
+      </button>
+    </div>
+
+    <div class="title-inner">
+      <div class="title-hero">
+        <div class="emblem" aria-hidden="true">
+          <span class="mini v2">2</span><span class="mini v8">8</span><span class="mini v32">32</span><span class="mini v128">128</span><span class="mini v512">512</span><span class="mini v2048">2048</span>
+        </div>
+        <h1 id="logo" class="logo"><span class="l-neon">NEON</span><span class="l-merge">MERGE</span></h1>
+        <p class="tagline" data-i18n="tagline"></p>
+        <div class="modes">
+          <button type="button" class="mode-btn classic" id="btn-classic">
+            <span class="mode-name" data-i18n="classic"></span>
+            <span class="mode-desc" data-i18n="classicDesc"></span>
+            <span class="mode-meta" id="classic-meta"></span>
+          </button>
+          <button type="button" class="mode-btn daily" id="btn-daily">
+            <span class="mode-chip" id="daily-date"></span>
+            <span class="mode-name" data-i18n="daily"></span>
+            <span class="mode-desc" data-i18n="dailyDesc"></span>
+            <span class="mode-meta" id="daily-meta"></span>
+          </button>
+        </div>
+      </div>
+
+      <aside class="howto" aria-labelledby="howto-h">
+        <h2 id="howto-h" data-i18n="howTo"></h2>
+        <ol>
+          <li data-i18n="how1"></li>
+          <li data-i18n="how2"></li>
+          <li class="rule-combo" data-i18n="how3"></li>
+          <li data-i18n="how4"></li>
+          <li data-i18n="how5"></li>
+        </ol>
+        <p class="keys" data-i18n="keys"></p>
+      </aside>
+    </div>
+    <p class="credit" data-i18n="credit"></p>
+  </section>
+
+  <!-- ===================== Game screen ===================== -->
+  <section id="screen-game" class="screen" aria-label="Neon Merge">
+    <div class="game">
+      <div class="panel">
+        <div class="topbar">
+          <button type="button" class="icon-btn" id="btn-menu" data-i18n-label="menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
+          </button>
+          <div class="brand">
+            <span class="brand-logo"><span class="l-neon">NEON</span> <span class="l-merge">MERGE</span></span>
+            <span class="mode-tag"><span class="tag-full" id="mode-tag-full"></span><span class="tag-short" id="mode-tag-short"></span></span>
+          </div>
+          <div class="tools">
+            <button type="button" class="icon-btn lang-btn" data-action="lang"><span class="lc-fr">FR</span><span class="lc-en">EN</span></button>
+            <button type="button" class="icon-btn sound-btn" data-action="sound">
+              <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+              <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
+            </button>
+            <button type="button" class="icon-btn" id="btn-pause" data-i18n-label="pause">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5v13M15 5.5v13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat stat-score">
+            <span class="stat-label" data-i18n="score"></span>
+            <span class="stat-value" id="score">0</span>
+            <span class="score-pop" id="score-pop" aria-hidden="true"></span>
+          </div>
+          <div class="stat stat-best">
+            <span class="stat-label" id="best-label"></span>
+            <span class="stat-value" id="best">0</span>
+          </div>
+        </div>
+
+        <div class="combo" id="combo">
+          <span class="combo-label" data-i18n="combo"></span>
+          <span class="combo-bar" aria-hidden="true"><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></span>
+          <span class="combo-text" id="combo-text"></span>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn" id="btn-undo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+            <span data-i18n="undo"></span>
+            <span class="badge" id="undo-count">1</span>
+          </button>
+          <button type="button" class="btn" id="btn-new">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+            <span data-i18n="newGame"></span>
+          </button>
+        </div>
+
+        <p class="hint" data-i18n="keys"></p>
+      </div>
+
+      <div class="board-wrap" id="board-wrap">
+        <div class="board" id="board" data-i18n-label="board" role="group">
+          <div class="cells" aria-hidden="true">
+            <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+            <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+            <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+            <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+          </div>
+          <div class="tiles" id="tiles"></div>
+          <div class="combo-float" id="combo-float" aria-hidden="true"></div>
+          <div class="banner" id="banner" aria-hidden="true"></div>
+
+          <div class="board-overlay" id="ov-end" hidden>
+            <h2 class="ov-title" data-i18n="overTitle"></h2>
+            <div class="ov-scores">
+              <div><span data-i18n="score"></span><strong id="end-score">0</strong></div>
+              <div><span id="end-best-label"></span><strong id="end-best">0</strong></div>
+            </div>
+            <p class="ov-badge" id="end-newbest" data-i18n="newBest" hidden></p>
+            <div class="ov-actions">
+              <button type="button" class="btn primary" id="end-again" data-i18n="playAgain"></button>
+              <button type="button" class="btn" id="end-undo"></button>
+              <button type="button" class="btn" id="end-menu" data-i18n="menu"></button>
+            </div>
+          </div>
+
+          <div class="board-overlay win" id="ov-win" hidden>
+            <h2 class="ov-title" data-i18n="winTitle"></h2>
+            <p class="ov-text" data-i18n="winText"></p>
+            <div class="ov-actions">
+              <button type="button" class="btn primary" id="win-keep" data-i18n="keepGoing"></button>
+              <button type="button" class="btn" id="win-new" data-i18n="newGame"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="ov-pause" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="pause-h">
+        <h2 id="pause-h" data-i18n="paused"></h2>
+        <p data-i18n="pausedHint"></p>
+        <div class="dialog-actions">
+          <button type="button" class="btn primary" id="pause-resume" data-i18n="resume"></button>
+          <button type="button" class="btn" id="pause-menu" data-i18n="menu"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="ov-confirm" hidden>
+      <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-h" aria-describedby="confirm-p">
+        <h2 id="confirm-h" data-i18n="confirmTitle"></h2>
+        <p id="confirm-p" data-i18n="confirmText"></p>
+        <div class="dialog-actions">
+          <button type="button" class="btn" id="confirm-no" data-i18n="confirmNo"></button>
+          <button type="button" class="btn primary danger" id="confirm-yes" data-i18n="confirmYes"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</main>
+
+<noscript><p class="noscript">Neon Merge needs JavaScript. / Neon Merge nécessite JavaScript.</p></noscript>
+<script src="game.js"></script>
+</body>
+</html>
